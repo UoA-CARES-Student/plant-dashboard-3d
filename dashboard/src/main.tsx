@@ -9,6 +9,7 @@ import BuildingPage from './pages/BuildingPage';
 import PlotPage from './pages/PlotPage';
 import PlantPage from './pages/PlantPage';
 import { ConfigProvider } from 'antd';
+import '@fontsource/plus-jakarta-sans';
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,12 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       theme={{
         token: {
           colorPrimary: '#6B9080',
+          colorTextBase: '#040303',
+          fontFamily:
+            // eslint-disable-next-line quotes
+            "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+
+          colorBgLayout: '#fff',
         },
       }}
     >
