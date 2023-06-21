@@ -5,8 +5,8 @@ interface PlotAOneClickableSvgProps {
   onClickPlant001: () => void;
   onClickPlant002: () => void;
   onClickPlant003: () => void;
-  height?: number;
-  width?: number;
+  height?: number | string;
+  width?: number | string;
 }
 
 export default function PlotAOneClickableSvg(props: PlotAOneClickableSvgProps) {

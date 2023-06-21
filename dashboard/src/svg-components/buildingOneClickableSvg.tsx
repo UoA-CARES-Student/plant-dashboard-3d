@@ -11,8 +11,8 @@ interface BuildingOneClickableSvgProps {
   onClickPlotC1: () => void;
   onClickPlotC2: () => void;
   onClickPlotC3: () => void;
-  height?: number;
-  width?: number;
+  height?: number | string;
+  width?: number | string;
 }
 
 export default function BuildingOneClickableSvg(props: BuildingOneClickableSvgProps) {

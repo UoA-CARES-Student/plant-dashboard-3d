@@ -6,8 +6,8 @@ interface FarmOneClickableSvgProps {
   onClickBuilding2: () => void;
   onClickBuilding3: () => void;
   onClickBuilding4: () => void;
-  height?: number;
-  width?: number;
+  height?: number | string;
+  width?: number | string;
 }
 
 export default function FarmOneClickableSvg(props: FarmOneClickableSvgProps) {
