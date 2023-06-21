@@ -28,6 +28,12 @@ export default [
             plotName: 'Plot A1',
             plants: [
               {
+                plantName: '001',
+              },
+              {
+                plantName: '002',
+              },
+              {
                 plantName: '003',
               },
             ],
