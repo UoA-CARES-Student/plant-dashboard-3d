@@ -3,9 +3,20 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import theme from '../theme';
 import Menu, { MenuProps } from 'antd/es/menu/menu';
 import profileImage from '../assets/profile.svg';
+import farms from '../data.ts';
+import { ItemType } from 'antd/es/menu/hooks/useItems';
 
 function MainLayout() {
   const navigate = useNavigate();
+
+  const buildings: ItemType[] = farms.map((farm) => ({
+    type: 'group',
+    label: farm.farmName,
+    children: farm.buildings.map((building) => ({
+      label: building.buildingName,
+      key: building.id,
+    })),
+  }));
 
   const items: MenuProps['items'] = [
     {
@@ -15,45 +26,11 @@ function MainLayout() {
     {
       label: 'Buildings',
       key: 'buildings',
-      children: [
-        {
-          type: 'group',
-          label: 'Farm 1',
-          children: [
-            {
-              label: 'Building 1',
-              key: 'building1',
-            },
-            {
-              label: 'Building 2',
-              key: 'building2',
-            },
-            {
-              label: 'Building 3',
-              key: 'building3',
-            },
-            {
-              label: 'Building 4',
-              key: 'building4',
-            },
-          ],
-        },
-        {
-          type: 'group',
-          label: 'Farm 2',
-          children: [
-            {
-              label: 'Main Greenhouse',
-              key: 'maingreenhouse',
-            },
-          ],
-        },
-      ],
+      children: buildings,
     },
   ];
 
   const onMenuClick: MenuProps['onClick'] = (e) => {
-    console.log('click: ', e.key);
     if (e.key === 'farms') {
       navigate('/');
     } else {
@@ -80,13 +57,13 @@ function MainLayout() {
           items={items}
           style={{
             minWidth: 0,
-            maxWidth: 300,
+            maxWidth: 250,
             flex: 'auto',
             justifyContent: 'center',
             background: theme.palette.primary1,
           }}
         />
-        <img src={profileImage} alt='logo' />
+        <img src={profileImage} alt='logo' onClick={() => navigate('/')} />
       </Header>
       <Content>
         <Outlet />

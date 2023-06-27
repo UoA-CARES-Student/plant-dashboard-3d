@@ -25,15 +25,15 @@ const router = createBrowserRouter([
             element: <FarmsPage />,
           },
           {
-            path: 'building',
+            path: 'building/:buildingId',
             element: <BuildingPage />,
           },
           {
-            path: 'plot',
+            path: 'plot/:plotId',
             element: <PlotPage />,
           },
           {
-            path: 'plant',
+            path: 'plant/:plantId',
             element: <PlantPage />,
           },
         ],
