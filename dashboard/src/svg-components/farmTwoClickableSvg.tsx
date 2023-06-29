@@ -1,13 +1,14 @@
 import { useState } from 'react';
+import farms from '../data';
 
 interface FarmTwoClickableSvgProps {
-  onClickMainGreenhouse: () => void;
+  onBuildingClick: (id: number) => void;
   height?: number | string;
   width?: number | string;
 }
 
 export default function FarmTwoClickableSvg(props: FarmTwoClickableSvgProps) {
-  const { onClickMainGreenhouse, height, width } = props;
+  const { onBuildingClick, height, width } = props;
 
   const [hovered, setHovered] = useState(false);
 
@@ -1758,7 +1759,7 @@ export default function FarmTwoClickableSvg(props: FarmTwoClickableSvgProps) {
         strokeLinecap='round'
         strokeLinejoin='round'
         strokeOpacity='1'
-        onClick={onClickMainGreenhouse}
+        onClick={() => onBuildingClick(farms[1].buildings[0].id)}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         style={{ cursor: 'pointer' }}

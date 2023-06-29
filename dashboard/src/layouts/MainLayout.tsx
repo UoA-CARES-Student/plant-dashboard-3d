@@ -48,7 +48,12 @@ function MainLayout() {
           background: theme.palette.primary1,
         }}
       >
-        <img src='/logo.svg' alt='logo' />
+        <img
+          src='/logo.svg'
+          alt='logo'
+          style={{ cursor: 'pointer' }}
+          onClick={() => navigate('/')}
+        />
         <Menu
           theme='light'
           mode='horizontal'
@@ -63,7 +68,12 @@ function MainLayout() {
             background: theme.palette.primary1,
           }}
         />
-        <img src={profileImage} alt='logo' onClick={() => navigate('/')} />
+        <img
+          src={profileImage}
+          alt='logo'
+          style={{ cursor: 'pointer' }}
+          onClick={() => navigate('/')}
+        />
       </Header>
       <Content>
         <Outlet />

@@ -2,33 +2,13 @@ import { useState } from 'react';
 import farms, { Plot } from '../data';
 
 interface BuildingOneClickableSvgProps {
-  onClickPlotA1: () => void;
-  onClickPlotA2: () => void;
-  onClickPlotA3: () => void;
-  onClickPlotB1: () => void;
-  onClickPlotB2: () => void;
-  onClickPlotB3: () => void;
-  onClickPlotC1: () => void;
-  onClickPlotC2: () => void;
-  onClickPlotC3: () => void;
+  onClickPlot: (id: number) => void;
   height?: number | string;
   width?: number | string;
 }
 
 export default function BuildingOneClickableSvg(props: BuildingOneClickableSvgProps) {
-  const {
-    onClickPlotA1,
-    onClickPlotA2,
-    onClickPlotA3,
-    onClickPlotB1,
-    onClickPlotB2,
-    onClickPlotB3,
-    onClickPlotC1,
-    onClickPlotC2,
-    onClickPlotC3,
-    height,
-    width,
-  } = props;
+  const { onClickPlot, height, width } = props;
 
   const [hoveredPlot, setHoveredPlot] = useState<Plot | undefined>();
 
@@ -1815,7 +1795,7 @@ export default function BuildingOneClickableSvg(props: BuildingOneClickableSvgPr
         strokeLinecap='round'
         strokeLinejoin='round'
         transform='translate(.52)'
-        onClick={onClickPlotA1}
+        onClick={() => onClickPlot(building.plots[0].id)}
         onMouseEnter={() => setHoveredPlot(building.plots[0])}
         onMouseLeave={() => setHoveredPlot(undefined)}
         style={{ cursor: 'pointer' }}
@@ -1873,7 +1853,7 @@ export default function BuildingOneClickableSvg(props: BuildingOneClickableSvgPr
         strokeLinecap='round'
         strokeLinejoin='round'
         transform='translate(.52)'
-        onClick={onClickPlotA2}
+        onClick={() => onClickPlot(building.plots[1].id)}
         onMouseEnter={() => setHoveredPlot(building.plots[1])}
         onMouseLeave={() => setHoveredPlot(undefined)}
         style={{ cursor: 'pointer' }}
@@ -1930,7 +1910,7 @@ export default function BuildingOneClickableSvg(props: BuildingOneClickableSvgPr
         strokeLinecap='round'
         strokeLinejoin='round'
         transform='translate(.52)'
-        onClick={onClickPlotA3}
+        onClick={() => onClickPlot(building.plots[2].id)}
         onMouseEnter={() => setHoveredPlot(building.plots[2])}
         onMouseLeave={() => setHoveredPlot(undefined)}
         style={{ cursor: 'pointer' }}
@@ -1987,7 +1967,7 @@ export default function BuildingOneClickableSvg(props: BuildingOneClickableSvgPr
         strokeLinecap='round'
         strokeLinejoin='round'
         transform='translate(.52)'
-        onClick={onClickPlotB1}
+        onClick={() => onClickPlot(building.plots[3].id)}
         onMouseEnter={() => setHoveredPlot(building.plots[3])}
         onMouseLeave={() => setHoveredPlot(undefined)}
         style={{ cursor: 'pointer' }}
@@ -2044,7 +2024,7 @@ export default function BuildingOneClickableSvg(props: BuildingOneClickableSvgPr
         strokeLinecap='round'
         strokeLinejoin='round'
         transform='translate(.52)'
-        onClick={onClickPlotB2}
+        onClick={() => onClickPlot(building.plots[4].id)}
         onMouseEnter={() => setHoveredPlot(building.plots[4])}
         onMouseLeave={() => setHoveredPlot(undefined)}
         style={{ cursor: 'pointer' }}
@@ -2101,7 +2081,7 @@ export default function BuildingOneClickableSvg(props: BuildingOneClickableSvgPr
         strokeLinecap='round'
         strokeLinejoin='round'
         transform='translate(.52)'
-        onClick={onClickPlotB3}
+        onClick={() => onClickPlot(building.plots[5].id)}
         onMouseEnter={() => setHoveredPlot(building.plots[5])}
         onMouseLeave={() => setHoveredPlot(undefined)}
         style={{ cursor: 'pointer' }}
@@ -2158,7 +2138,7 @@ export default function BuildingOneClickableSvg(props: BuildingOneClickableSvgPr
         strokeLinecap='round'
         strokeLinejoin='round'
         transform='translate(.52)'
-        onClick={onClickPlotC1}
+        onClick={() => onClickPlot(building.plots[6].id)}
         onMouseEnter={() => setHoveredPlot(building.plots[6])}
         onMouseLeave={() => setHoveredPlot(undefined)}
         style={{ cursor: 'pointer' }}
@@ -2215,7 +2195,7 @@ export default function BuildingOneClickableSvg(props: BuildingOneClickableSvgPr
         strokeLinecap='round'
         strokeLinejoin='round'
         transform='translate(.52)'
-        onClick={onClickPlotC2}
+        onClick={() => onClickPlot(building.plots[7].id)}
         onMouseEnter={() => setHoveredPlot(building.plots[7])}
         onMouseLeave={() => setHoveredPlot(undefined)}
         style={{ cursor: 'pointer' }}
@@ -2272,7 +2252,7 @@ export default function BuildingOneClickableSvg(props: BuildingOneClickableSvgPr
         strokeLinecap='round'
         strokeLinejoin='round'
         transform='translate(.52)'
-        onClick={onClickPlotC3}
+        onClick={() => onClickPlot(building.plots[8].id)}
         onMouseEnter={() => setHoveredPlot(building.plots[8])}
         onMouseLeave={() => setHoveredPlot(undefined)}
         style={{ cursor: 'pointer' }}

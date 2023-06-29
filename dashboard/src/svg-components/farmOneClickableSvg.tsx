@@ -2,17 +2,13 @@ import { useState } from 'react';
 import farms, { Building } from '../data';
 
 interface FarmOneClickableSvgProps {
-  onClickBuilding1: () => void;
-  onClickBuilding2: () => void;
-  onClickBuilding3: () => void;
-  onClickBuilding4: () => void;
+  onBuildingClick: (id: number) => void;
   height?: number | string;
   width?: number | string;
 }
 
 export default function FarmOneClickableSvg(props: FarmOneClickableSvgProps) {
-  const { onClickBuilding1, onClickBuilding2, onClickBuilding3, onClickBuilding4, height, width } =
-    props;
+  const { onBuildingClick, height, width } = props;
 
   const [hoveredBuilding, setHoveredBuilding] = useState<Building | undefined>();
 
@@ -488,7 +484,7 @@ export default function FarmOneClickableSvg(props: FarmOneClickableSvgProps) {
         strokeLinecap='round'
         strokeLinejoin='round'
         strokeOpacity='1'
-        onClick={onClickBuilding1}
+        onClick={() => onBuildingClick(farms[0].buildings[0].id)}
         onMouseEnter={() => setHoveredBuilding(farms[0].buildings[0])}
         onMouseLeave={() => setHoveredBuilding(undefined)}
         style={{ cursor: 'pointer' }}
@@ -540,7 +536,7 @@ export default function FarmOneClickableSvg(props: FarmOneClickableSvgProps) {
         strokeLinejoin='round'
         strokeOpacity='1'
         transform='translate(3.935 232.912)'
-        onClick={onClickBuilding2}
+        onClick={() => onBuildingClick(farms[0].buildings[1].id)}
         onMouseEnter={() => setHoveredBuilding(farms[0].buildings[1])}
         onMouseLeave={() => setHoveredBuilding(undefined)}
         style={{ cursor: 'pointer' }}
@@ -592,7 +588,7 @@ export default function FarmOneClickableSvg(props: FarmOneClickableSvgProps) {
         strokeLinejoin='round'
         strokeOpacity='1'
         transform='translate(2.899 460.932)'
-        onClick={onClickBuilding3}
+        onClick={() => onBuildingClick(farms[0].buildings[2].id)}
         onMouseEnter={() => setHoveredBuilding(farms[0].buildings[2])}
         onMouseLeave={() => setHoveredBuilding(undefined)}
         style={{ cursor: 'pointer' }}
@@ -644,7 +640,7 @@ export default function FarmOneClickableSvg(props: FarmOneClickableSvgProps) {
         strokeLinejoin='round'
         strokeOpacity='1'
         transform='translate(.826 693.098)'
-        onClick={onClickBuilding4}
+        onClick={() => onBuildingClick(farms[0].buildings[3].id)}
         onMouseEnter={() => setHoveredBuilding(farms[0].buildings[3])}
         onMouseLeave={() => setHoveredBuilding(undefined)}
         style={{ cursor: 'pointer' }}

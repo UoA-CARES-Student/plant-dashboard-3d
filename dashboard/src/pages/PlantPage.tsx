@@ -1,5 +1,8 @@
+import { useParams } from 'react-router-dom';
+
 function PlantPage() {
-  return <div>PlantPage</div>;
+  const { plantId } = useParams();
+  return <div>PlantPage {plantId}</div>;
 }
 
 export default PlantPage;
