@@ -11,15 +11,20 @@ function PlotPage() {
   return plotId && parseInt(plotId) !== 0 ? (
     <div>Error</div>
   ) : (
-    <Row style={{ height: 'calc(50vh - 64px)' }}>
-      <Col span={12}></Col>
+    <>
+      <Row style={{ height: 'calc(50vh - 64px)' }}>
+        <Col span={12}></Col>
 
-      <Col span={12} style={{ height: '100%', background: theme.palette.bole1 }}>
-        <ZoomableComponent>
-          <PlotAOneClickableSvg onClickPlant={(id: number) => navigate(`/plant/${id}`)} />
-        </ZoomableComponent>
-      </Col>
-    </Row>
+        <Col span={12} style={{ height: '100%', background: theme.palette.bole1 }}>
+          <ZoomableComponent>
+            <PlotAOneClickableSvg onClickPlant={(id: number) => navigate(`/plant/${id}`)} />
+          </ZoomableComponent>
+        </Col>
+      </Row>
+      <Row style={{ height: '50vh' }}>
+        <Col span={24}></Col>
+      </Row>
+    </>
   );
 }
 

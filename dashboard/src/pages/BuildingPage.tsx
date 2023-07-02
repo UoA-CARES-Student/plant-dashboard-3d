@@ -12,15 +12,20 @@ function BuildingPage() {
   return buildingId && parseInt(buildingId) !== 0 ? (
     <div>Error</div>
   ) : (
-    <Row style={{ height: 'calc(50vh - 64px)' }}>
-      <Col span={12}></Col>
+    <>
+      <Row style={{ height: 'calc(50vh - 64px)' }}>
+        <Col span={12}></Col>
 
-      <Col span={12} style={{ height: '100%', background: theme.palette.bole1 }}>
-        <ZoomableComponent>
-          <BuildingOneClickableSvg onClickPlot={(id: number) => navigate(`/plot/${id}`)} />
-        </ZoomableComponent>
-      </Col>
-    </Row>
+        <Col span={12} style={{ height: '100%', background: theme.palette.bole1 }}>
+          <ZoomableComponent>
+            <BuildingOneClickableSvg onClickPlot={(id: number) => navigate(`/plot/${id}`)} />
+          </ZoomableComponent>
+        </Col>
+      </Row>
+      <Row style={{ height: '50vh' }}>
+        <Col span={24}></Col>
+      </Row>
+    </>
   );
 }
 
