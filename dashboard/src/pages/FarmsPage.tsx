@@ -10,11 +10,11 @@ function FarmsPage() {
   const onBuildingClick = (id: number) => navigate(`/building/${id}`);
 
   return (
-    <Row gutter={8} justify={'center'} style={{ height: '100%' }}>
-      <Col style={{ width: '42.63%' }}>
+    <Row justify={'center'} style={{ height: '100%', gap: '0.6%' }}>
+      <Col style={{ width: '42.2%' }}>
         <FarmOneClickableSvg onBuildingClick={onBuildingClick} />
       </Col>
-      <Col style={{ width: '57.32%' }}>
+      <Col style={{ width: '57%' }}>
         <FarmTwoClickableSvg onBuildingClick={onBuildingClick} />
       </Col>
     </Row>

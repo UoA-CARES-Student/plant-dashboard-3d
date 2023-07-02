@@ -2,15 +2,13 @@ import { useState } from 'react';
 import farms, { Plant } from '../data';
 
 interface PlotAOneClickableSvgProps {
-  onClickPlant001: () => void;
-  onClickPlant002: () => void;
-  onClickPlant003: () => void;
+  onClickPlant: (id: number) => void;
   height?: number | string;
   width?: number | string;
 }
 
 export default function PlotAOneClickableSvg(props: PlotAOneClickableSvgProps) {
-  const { onClickPlant001, onClickPlant002, onClickPlant003, height, width } = props;
+  const { onClickPlant, height, width } = props;
 
   const [hoveredPlant, setHoveredPlant] = useState<Plant | undefined>();
 
@@ -480,7 +478,7 @@ export default function PlotAOneClickableSvg(props: PlotAOneClickableSvgProps) {
         fillOpacity='1'
         strokeLinecap='round'
         strokeLinejoin='round'
-        onClick={onClickPlant001}
+        onClick={() => onClickPlant(plot.plants[0].id)}
         onMouseEnter={() => setHoveredPlant(plot.plants[0])}
         onMouseLeave={() => setHoveredPlant(undefined)}
         style={{ cursor: 'pointer' }}
@@ -536,7 +534,7 @@ export default function PlotAOneClickableSvg(props: PlotAOneClickableSvgProps) {
         fillOpacity='1'
         strokeLinecap='round'
         strokeLinejoin='round'
-        onClick={onClickPlant002}
+        onClick={() => onClickPlant(plot.plants[1].id)}
         onMouseEnter={() => setHoveredPlant(plot.plants[1])}
         onMouseLeave={() => setHoveredPlant(undefined)}
         style={{ cursor: 'pointer' }}
@@ -592,7 +590,7 @@ export default function PlotAOneClickableSvg(props: PlotAOneClickableSvgProps) {
         fillOpacity='1'
         strokeLinecap='round'
         strokeLinejoin='round'
-        onClick={onClickPlant003}
+        onClick={() => onClickPlant(plot.plants[2].id)}
         onMouseEnter={() => setHoveredPlant(plot.plants[2])}
         onMouseLeave={() => setHoveredPlant(undefined)}
         style={{ cursor: 'pointer' }}

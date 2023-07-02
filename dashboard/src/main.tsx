@@ -10,6 +10,7 @@ import PlotPage from './pages/PlotPage';
 import PlantPage from './pages/PlantPage';
 import { ConfigProvider } from 'antd';
 import '@fontsource/plus-jakarta-sans';
+import 'react-material-symbols/dist/outlined.css';
 
 const router = createBrowserRouter([
   {
