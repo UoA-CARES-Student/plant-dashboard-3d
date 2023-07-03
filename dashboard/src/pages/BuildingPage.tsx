@@ -15,8 +15,8 @@ import {
   YAxis,
 } from 'recharts';
 import farms, { Building } from '../data.ts';
-import { range } from 'lodash-es';
-import { useState } from 'react';
+import { isEqual, range } from 'lodash-es';
+import { useEffect, useState } from 'react';
 import { MaterialSymbol } from 'react-material-symbols';
 
 function BuildingPage() {
@@ -40,20 +40,21 @@ function BuildingPage() {
     return <div>Error</div>;
   }
 
+  const maximumTimelineSize = 20;
   const [offsetRange, setOffsetRange] = useState<number[]>([]);
-  const [timelineSize] = useState<number>(20);
+  const [currentTimelineSize, setCurrentTimelineSize] = useState<number>(20);
   const [currentDataIndex, setCurrentDataIndex] = useState<number>(currentBuilding.data.length - 1);
 
   const getCurrentTimeline = () =>
     currentBuilding
       ? currentBuilding.data.slice(
-          Math.max(0, currentDataIndex - (timelineSize - 1)),
+          Math.max(0, currentDataIndex - (maximumTimelineSize - 1)),
           currentDataIndex + 1,
         )
       : [];
 
   const onTimelineLeft = () => {
-    if (!currentBuilding || currentDataIndex <= 0) {
+    if (!currentBuilding || currentDataIndex <= 1) {
       return;
     }
     setCurrentDataIndex(currentDataIndex - 1);
@@ -70,8 +71,12 @@ function BuildingPage() {
     if (!currentBuilding) {
       return;
     }
-    setCurrentDataIndex(currentDataIndex - (timelineSize - 1 - index));
+    setCurrentDataIndex(currentDataIndex - (currentTimelineSize - 1 - index));
   };
+
+  useEffect(() => {
+    setCurrentTimelineSize(getCurrentTimeline().length);
+  }, [currentDataIndex]);
 
   return !currentBuilding || parseInt(buildingId) !== 0 ? (
     <div>Error</div>
@@ -107,7 +112,7 @@ function BuildingPage() {
                   }}
                   onClick={() => onTimelineClick(index)}
                 >
-                  {getCurrentTimeline()[index].date.split('-')[2]}
+                  {getCurrentTimeline()[index] && getCurrentTimeline()[index].date.split('-')[2]}
                 </Button>
               ))}
             </Col>
@@ -123,26 +128,32 @@ function BuildingPage() {
               <ResponsiveContainer
                 width='100%'
                 height={100}
-                onResize={(width) => {
-                  if (!currentBuilding) {
-                    return;
-                  }
-                  setOffsetRange(
-                    range(5, width - 10 + 5 + 1, (width - 10) / (getCurrentTimeline().length - 1)),
-                  );
-                }}
+                // onResize={(width) => {
+                //   if (!currentBuilding) {
+                //     return;
+                //   }
+                //   setOffsetRange(
+                //     range(5, width - 10 + 5 + 1, (width - 10) / (getCurrentTimeline().length - 1)),
+                //   );
+                // }}
               >
                 <LineChart data={getCurrentTimeline()}>
                   <CartesianGrid
                     strokeDasharray='3 3'
                     horizontal={false}
-                    verticalCoordinatesGenerator={(graphDetails) =>
-                      range(
+                    verticalCoordinatesGenerator={(graphDetails) => {
+                      const range1 = range(
                         graphDetails.xAxis.x,
                         graphDetails.xAxis.width + graphDetails.xAxis.x + 1,
                         graphDetails.xAxis.width / (graphDetails.xAxis.domain.length - 1),
-                      )
-                    }
+                      );
+
+                      if (!isEqual(range1, offsetRange)) {
+                        setOffsetRange(range1);
+                      }
+
+                      return range1;
+                    }}
                   />
                   <XAxis dataKey='date' hide={true} />
                   <YAxis domain={['dataMin', 'dataMax']} hide={true} />
