@@ -18,13 +18,15 @@ import farms, { Building } from '../data.ts';
 import { isEqual, range } from 'lodash-es';
 import { useEffect, useState } from 'react';
 import { MaterialSymbol } from 'react-material-symbols';
+import dayjs from 'dayjs';
+import CentreErrorCard from '../components/CentreErrorCard.tsx';
 
 function BuildingPage() {
   const navigate = useNavigate();
   const { buildingId } = useParams();
 
   if (!buildingId || isNaN(parseInt(buildingId))) {
-    return <div>Error</div>;
+    return <CentreErrorCard text='Id is not a valid number' />;
   }
 
   let currentBuilding: undefined | Building = undefined;
@@ -37,10 +39,10 @@ function BuildingPage() {
   }
 
   if (!currentBuilding || parseInt(buildingId) !== 0) {
-    return <div>Error</div>;
+    return <CentreErrorCard text='Number is not a valid id' />;
   }
 
-  const maximumTimelineSize = 20;
+  const maximumTimelineSize = 16;
   const [offsetRange, setOffsetRange] = useState<number[]>([]);
   const [currentTimelineSize, setCurrentTimelineSize] = useState<number>(maximumTimelineSize);
   const [currentDataIndex, setCurrentDataIndex] = useState<number>(currentBuilding.data.length - 1);
@@ -78,9 +80,7 @@ function BuildingPage() {
     setCurrentTimelineSize(getCurrentTimeline().length);
   }, [currentDataIndex]);
 
-  return !currentBuilding || parseInt(buildingId) !== 0 ? (
-    <div>Error</div>
-  ) : (
+  return (
     <>
       <Row style={{ height: 'calc(50vh - 64px)' }}>
         <Col span={12}></Col>
@@ -94,7 +94,7 @@ function BuildingPage() {
       <Row style={{ height: '50vh' }}>
         <Col span={24}>
           <Row align={'middle'} style={{ backgroundColor: theme.palette.primary1, height: 48 }}>
-            <Col span={4} style={{ display: 'flex', justifyContent: 'end', paddingRight: 24 }}>
+            <Col span={4} style={{ display: 'flex', justifyContent: 'end', paddingRight: 32 }}>
               <Button onClick={onTimelineLeft}>
                 <MaterialSymbol icon='chevron_left' size={24} grade={-25} />
               </Button>
@@ -109,14 +109,16 @@ function BuildingPage() {
                     left: offset,
                     top: 8,
                     transform: 'translateX(-50%)',
+                    padding: 4,
                   }}
                   onClick={() => onTimelineClick(index)}
                 >
-                  {getCurrentTimeline()[index] && getCurrentTimeline()[index].date.split('-')[2]}
+                  {getCurrentTimeline()[index] &&
+                    dayjs(getCurrentTimeline()[index].date).format('MMMDD')}
                 </Button>
               ))}
             </Col>
-            <Col span={4} style={{ paddingLeft: 24 }}>
+            <Col span={4} style={{ paddingLeft: 32 }}>
               <Button onClick={onTimelineRight}>
                 <MaterialSymbol icon='chevron_right' size={24} grade={-25} />
               </Button>
