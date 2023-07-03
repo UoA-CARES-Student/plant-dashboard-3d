@@ -1,10 +1,10 @@
 import { Card, Typography } from 'antd';
 
-interface ZoomableComponentProps {
+interface CentreErrorCardProps {
   text: string;
 }
 
-function CentreErrorCard(props: ZoomableComponentProps) {
+function CentreErrorCard(props: CentreErrorCardProps) {
   const { text } = props;
   return (
     <div
