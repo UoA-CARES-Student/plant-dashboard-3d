@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import BuildingOneClickableSvg from '../svg-components/buildingOneClickableSvg';
 import theme from '../theme';
 import ZoomableComponent from '../components/ZoomableComponent';
-import { Button } from 'antd';
+import { Button, Typography } from 'antd';
 import {
   CartesianGrid,
   Line,
@@ -24,6 +24,7 @@ import CentreErrorCard from '../components/CentreErrorCard.tsx';
 function BuildingPage() {
   const navigate = useNavigate();
   const { buildingId } = useParams();
+  const { Title, Text } = Typography;
 
   if (!buildingId || isNaN(parseInt(buildingId))) {
     return <CentreErrorCard text='Id is not a valid number' />;
@@ -126,53 +127,88 @@ function BuildingPage() {
           </Row>
           <Row style={{ height: 'calc(50vh - 48px)', overflow: 'auto' }}>
             <Col span={24}>
-              <Row>
-                <Col span={4}></Col>
-                <Col span={16}>
-                  <ResponsiveContainer
-                    width='100%'
-                    height={100}
-                    // onResize={(width) => {
-                    //   if (!currentBuilding) {
-                    //     return;
-                    //   }
-                    //   setOffsetRange(
-                    //     range(5, width - 10 + 5 + 1, (width - 10) / (getCurrentTimeline().length - 1)),
-                    //   );
-                    // }}
-                  >
-                    <LineChart data={getCurrentTimeline()}>
-                      <CartesianGrid
-                        strokeDasharray='3 3'
-                        horizontal={false}
-                        verticalCoordinatesGenerator={(graphDetails) => {
-                          const range1 = range(
-                            graphDetails.xAxis.x,
-                            graphDetails.xAxis.width + graphDetails.xAxis.x + 1,
-                            graphDetails.xAxis.width / (graphDetails.xAxis.domain.length - 1),
-                          );
+              {Object.keys(currentBuilding.data[0])
+                .filter((key) => key !== 'date')
+                .map((metric) => (
+                  <Row key={metric} align={'middle'}>
+                    <Col
+                      span={4}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'end',
+                        gap: '8px',
+                        paddingRight: 24,
+                      }}
+                    >
+                      <Title level={4} style={{ margin: 0 }}>
+                        Avg. {metric.charAt(0) + metric.slice(1)}
+                      </Title>
+                      <MaterialSymbol icon='fullscreen' size={32} grade={-25} />
+                    </Col>
+                    <Col span={16}>
+                      <ResponsiveContainer
+                        width='100%'
+                        height={80}
+                        // onResize={(width) => {
+                        //   if (!currentBuilding) {
+                        //     return;
+                        //   }
+                        //   setOffsetRange(
+                        //     range(5, width - 10 + 5 + 1, (width - 10) / (getCurrentTimeline().length - 1)),
+                        //   );
+                        // }}
+                      >
+                        <LineChart data={getCurrentTimeline()}>
+                          <CartesianGrid
+                            strokeDasharray='3 3'
+                            horizontal={false}
+                            verticalCoordinatesGenerator={(graphDetails) => {
+                              const range1 = range(
+                                graphDetails.xAxis.x,
+                                graphDetails.xAxis.width + graphDetails.xAxis.x + 1,
+                                graphDetails.xAxis.width / (graphDetails.xAxis.domain.length - 1),
+                              );
 
-                          if (!isEqual(range1, offsetRange)) {
-                            setOffsetRange(range1);
-                          }
+                              if (!isEqual(range1, offsetRange)) {
+                                setOffsetRange(range1);
+                              }
 
-                          return range1;
-                        }}
-                      />
-                      <XAxis dataKey='date' hide={true} />
-                      <YAxis domain={['dataMin', 'dataMax']} hide={true} />
-                      <Tooltip />
-                      <Line
-                        type='monotone'
-                        dataKey='volume'
-                        stroke={theme.palette.pumpkin4}
-                        isAnimationActive={false}
-                      />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </Col>
-                <Col span={4}></Col>
-              </Row>
+                              return range1;
+                            }}
+                          />
+                          <XAxis dataKey='date' hide={true} />
+                          <YAxis domain={['dataMin', 'dataMax']} hide={true} />
+                          <Tooltip />
+                          <Line
+                            type='monotone'
+                            dataKey={metric}
+                            stroke={theme.palette.pumpkin4}
+                            isAnimationActive={false}
+                          />
+                        </LineChart>
+                      </ResponsiveContainer>
+                    </Col>
+                    <Col
+                      span={4}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'start',
+                        gap: '8px',
+                        paddingLeft: 24,
+                      }}
+                    >
+                      <Text style={{ margin: 0, fontSize: 20, color: theme.palette.primary6 }}>
+                        {getCurrentTimeline()[currentTimelineSize - 1] &&
+                          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                          // @ts-ignore
+                          getCurrentTimeline()[currentTimelineSize - 1][metric].toString()}{' '}
+                        mm^3
+                      </Text>
+                    </Col>
+                  </Row>
+                ))}
             </Col>
           </Row>
         </Col>
