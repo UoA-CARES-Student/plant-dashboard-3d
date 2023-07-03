@@ -14,7 +14,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import farms, { Building, Data } from '../data.ts';
+import farms, { Building } from '../data.ts';
 import { range } from 'lodash-es';
 import { useState } from 'react';
 import { MaterialSymbol } from 'react-material-symbols';
@@ -41,10 +41,37 @@ function BuildingPage() {
   }
 
   const [offsetRange, setOffsetRange] = useState<number[]>([]);
-  const [currentDataDisplayed, setCurrentDataDisplayed] = useState<Data[]>(
-    currentBuilding.data.slice(-20),
-  );
+  const [timelineSize] = useState<number>(20);
   const [currentDataIndex, setCurrentDataIndex] = useState<number>(currentBuilding.data.length - 1);
+
+  const getCurrentTimeline = () =>
+    currentBuilding
+      ? currentBuilding.data.slice(
+          Math.max(0, currentDataIndex - (timelineSize - 1)),
+          currentDataIndex + 1,
+        )
+      : [];
+
+  const onTimelineLeft = () => {
+    if (!currentBuilding || currentDataIndex <= 0) {
+      return;
+    }
+    setCurrentDataIndex(currentDataIndex - 1);
+  };
+
+  const onTimelineRight = () => {
+    if (!currentBuilding || currentDataIndex >= currentBuilding.data.length - 1) {
+      return;
+    }
+    setCurrentDataIndex(currentDataIndex + 1);
+  };
+
+  const onTimelineClick = (index: number) => {
+    if (!currentBuilding) {
+      return;
+    }
+    setCurrentDataIndex(currentDataIndex - (timelineSize - 1 - index));
+  };
 
   return !currentBuilding || parseInt(buildingId) !== 0 ? (
     <div>Error</div>
@@ -62,8 +89,8 @@ function BuildingPage() {
       <Row style={{ height: '50vh' }}>
         <Col span={24}>
           <Row align={'middle'} style={{ backgroundColor: theme.palette.primary1 }}>
-            <Col span={4} style={{ display: 'flex', justifyContent: 'end', paddingRight: 12 }}>
-              <Button>
+            <Col span={4} style={{ display: 'flex', justifyContent: 'end', paddingRight: 24 }}>
+              <Button onClick={onTimelineLeft}>
                 <MaterialSymbol icon='chevron_left' size={24} grade={-25} />
               </Button>
             </Col>
@@ -78,13 +105,14 @@ function BuildingPage() {
                     top: 8,
                     transform: 'translateX(-50%)',
                   }}
+                  onClick={() => onTimelineClick(index)}
                 >
-                  {currentDataDisplayed[index].date.split('-')[2]}
+                  {getCurrentTimeline()[index].date.split('-')[2]}
                 </Button>
               ))}
             </Col>
-            <Col span={4} style={{ paddingLeft: 12 }}>
-              <Button>
+            <Col span={4} style={{ paddingLeft: 24 }}>
+              <Button onClick={onTimelineRight}>
                 <MaterialSymbol icon='chevron_right' size={24} grade={-25} />
               </Button>
             </Col>
@@ -100,11 +128,11 @@ function BuildingPage() {
                     return;
                   }
                   setOffsetRange(
-                    range(5, width - 10 + 5 + 1, (width - 10) / (currentDataDisplayed.length - 1)),
+                    range(5, width - 10 + 5 + 1, (width - 10) / (getCurrentTimeline().length - 1)),
                   );
                 }}
               >
-                <LineChart data={currentDataDisplayed}>
+                <LineChart data={getCurrentTimeline()}>
                   <CartesianGrid
                     strokeDasharray='3 3'
                     horizontal={false}
