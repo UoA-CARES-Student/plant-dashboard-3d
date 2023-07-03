@@ -42,7 +42,7 @@ function BuildingPage() {
 
   const maximumTimelineSize = 20;
   const [offsetRange, setOffsetRange] = useState<number[]>([]);
-  const [currentTimelineSize, setCurrentTimelineSize] = useState<number>(20);
+  const [currentTimelineSize, setCurrentTimelineSize] = useState<number>(maximumTimelineSize);
   const [currentDataIndex, setCurrentDataIndex] = useState<number>(currentBuilding.data.length - 1);
 
   const getCurrentTimeline = () =>
@@ -93,17 +93,17 @@ function BuildingPage() {
       </Row>
       <Row style={{ height: '50vh' }}>
         <Col span={24}>
-          <Row align={'middle'} style={{ backgroundColor: theme.palette.primary1 }}>
+          <Row align={'middle'} style={{ backgroundColor: theme.palette.primary1, height: 48 }}>
             <Col span={4} style={{ display: 'flex', justifyContent: 'end', paddingRight: 24 }}>
               <Button onClick={onTimelineLeft}>
                 <MaterialSymbol icon='chevron_left' size={24} grade={-25} />
               </Button>
             </Col>
-            <Col span={16} style={{ height: 48 }}>
+            <Col span={16} style={{ height: '100%' }}>
               {offsetRange.map((offset, index) => (
                 <Button
                   key={offset}
-                  type='text'
+                  type={index === offsetRange.length - 1 ? 'primary' : 'text'}
                   style={{
                     position: 'absolute',
                     left: offset,
@@ -122,52 +122,56 @@ function BuildingPage() {
               </Button>
             </Col>
           </Row>
-          <Row>
-            <Col span={4}></Col>
-            <Col span={16}>
-              <ResponsiveContainer
-                width='100%'
-                height={100}
-                // onResize={(width) => {
-                //   if (!currentBuilding) {
-                //     return;
-                //   }
-                //   setOffsetRange(
-                //     range(5, width - 10 + 5 + 1, (width - 10) / (getCurrentTimeline().length - 1)),
-                //   );
-                // }}
-              >
-                <LineChart data={getCurrentTimeline()}>
-                  <CartesianGrid
-                    strokeDasharray='3 3'
-                    horizontal={false}
-                    verticalCoordinatesGenerator={(graphDetails) => {
-                      const range1 = range(
-                        graphDetails.xAxis.x,
-                        graphDetails.xAxis.width + graphDetails.xAxis.x + 1,
-                        graphDetails.xAxis.width / (graphDetails.xAxis.domain.length - 1),
-                      );
+          <Row style={{ height: 'calc(50vh - 48px)', overflow: 'auto' }}>
+            <Col span={24}>
+              <Row>
+                <Col span={4}></Col>
+                <Col span={16}>
+                  <ResponsiveContainer
+                    width='100%'
+                    height={100}
+                    // onResize={(width) => {
+                    //   if (!currentBuilding) {
+                    //     return;
+                    //   }
+                    //   setOffsetRange(
+                    //     range(5, width - 10 + 5 + 1, (width - 10) / (getCurrentTimeline().length - 1)),
+                    //   );
+                    // }}
+                  >
+                    <LineChart data={getCurrentTimeline()}>
+                      <CartesianGrid
+                        strokeDasharray='3 3'
+                        horizontal={false}
+                        verticalCoordinatesGenerator={(graphDetails) => {
+                          const range1 = range(
+                            graphDetails.xAxis.x,
+                            graphDetails.xAxis.width + graphDetails.xAxis.x + 1,
+                            graphDetails.xAxis.width / (graphDetails.xAxis.domain.length - 1),
+                          );
 
-                      if (!isEqual(range1, offsetRange)) {
-                        setOffsetRange(range1);
-                      }
+                          if (!isEqual(range1, offsetRange)) {
+                            setOffsetRange(range1);
+                          }
 
-                      return range1;
-                    }}
-                  />
-                  <XAxis dataKey='date' hide={true} />
-                  <YAxis domain={['dataMin', 'dataMax']} hide={true} />
-                  <Tooltip />
-                  <Line
-                    type='monotone'
-                    dataKey='volume'
-                    stroke={theme.palette.pumpkin4}
-                    isAnimationActive={false}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
+                          return range1;
+                        }}
+                      />
+                      <XAxis dataKey='date' hide={true} />
+                      <YAxis domain={['dataMin', 'dataMax']} hide={true} />
+                      <Tooltip />
+                      <Line
+                        type='monotone'
+                        dataKey='volume'
+                        stroke={theme.palette.pumpkin4}
+                        isAnimationActive={false}
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </Col>
+                <Col span={4}></Col>
+              </Row>
             </Col>
-            <Col span={4}></Col>
           </Row>
         </Col>
       </Row>
