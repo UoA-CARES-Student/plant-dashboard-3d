@@ -1,4 +1,4 @@
-interface Data {
+export interface Data {
   date: string;
   volume: number;
   area: number;
@@ -8,7 +8,7 @@ interface Data {
   width: number;
 }
 
-interface Environment {
+export interface Environment {
   date: string;
   temperature: number;
   fluorescents: number;

@@ -13,6 +13,7 @@
     "@fontsource/plus-jakarta-sans": "^5.0.3",
     "antd": "^5.6.1",
     "dayjs": "^1.11.9",
+    "lodash-es": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-material-symbols": "^4.1.1",
@@ -21,6 +22,7 @@
     "recharts": "^2.7.2"
   },
   "devDependencies": {
+    "@types/lodash-es": "^4.17.7",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
     "@typescript-eslint/eslint-plugin": "^5.59.0",
