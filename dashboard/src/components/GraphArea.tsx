@@ -1,5 +1,5 @@
 import { Col, Row } from 'antd/es/grid';
-import { Button, Typography } from 'antd';
+import { Button, Menu, MenuProps, Typography } from 'antd';
 import { MaterialSymbol } from 'react-material-symbols';
 import {
   CartesianGrid,
@@ -23,6 +23,29 @@ interface GraphAreaProps {
 function GraphArea(props: GraphAreaProps) {
   const { data } = props;
   const { Title, Text } = Typography;
+
+  const items: MenuProps['items'] = [
+    {
+      label: 'Monthly',
+      key: 'monthly',
+    },
+    { type: 'divider' },
+    {
+      label: 'Weekly',
+      key: 'weekly',
+    },
+    { type: 'divider' },
+    {
+      label: 'Daily',
+      key: 'daily',
+    },
+  ];
+
+  const onMenuClick: MenuProps['onClick'] = (e) => {
+    if (e.key === 'farms') {
+      console.log('farms clicked');
+    }
+  };
 
   const maximumTimelineSize = 16;
   const [offsetRange, setOffsetRange] = useState<number[]>([]);
@@ -172,6 +195,21 @@ function GraphArea(props: GraphAreaProps) {
               </Row>
             ))}
         </Col>
+        <Menu
+          theme='light'
+          mode='vertical'
+          selectable={true}
+          selectedKeys={['weekly']}
+          onClick={onMenuClick}
+          items={items}
+          style={{
+            position: 'absolute',
+            bottom: 32,
+            right: 32,
+            borderInlineEnd: 0,
+            border: '1px solid',
+          }}
+        />
       </Row>
     </>
   );
