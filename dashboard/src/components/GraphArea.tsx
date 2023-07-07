@@ -136,6 +136,13 @@ function GraphArea(props: GraphAreaProps) {
     setCurrentDataIndex(currentDataIndex - 1);
   };
 
+  const onTimelineFirstPage = () => {
+    if (currentDataIndex < maximumTimelineSize) {
+      return;
+    }
+    setCurrentDataIndex(maximumTimelineSize - 1);
+  };
+
   const onTimelineRight = () => {
     if (currentDataIndex >= getCurrentDataLength() - 1) {
       return;
@@ -175,7 +182,13 @@ function GraphArea(props: GraphAreaProps) {
   return (
     <>
       <Row align={'middle'} style={{ backgroundColor: theme.palette.primary1, height: 48 }}>
-        <Col span={4} style={{ display: 'flex', justifyContent: 'end', paddingRight: 32 }}>
+        <Col
+          span={4}
+          style={{ display: 'flex', justifyContent: 'end', gap: '8px', paddingRight: 32 }}
+        >
+          <Button disabled={currentDataIndex < maximumTimelineSize} onClick={onTimelineFirstPage}>
+            <MaterialSymbol icon='first_page' size={24} grade={-25} />
+          </Button>
           <Button disabled={currentDataIndex <= 1} onClick={onTimelineLeft}>
             <MaterialSymbol icon='chevron_left' size={24} grade={-25} />
           </Button>
