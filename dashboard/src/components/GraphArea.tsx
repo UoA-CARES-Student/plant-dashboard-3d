@@ -1,5 +1,5 @@
 import { Col, Row } from 'antd/es/grid';
-import { Button, Menu, MenuProps, Typography } from 'antd';
+import { Button, Space, Typography } from 'antd';
 import { MaterialSymbol } from 'react-material-symbols';
 import {
   CartesianGrid,
@@ -24,33 +24,12 @@ function GraphArea(props: GraphAreaProps) {
   const { data } = props;
   const { Title, Text } = Typography;
 
-  const items: MenuProps['items'] = [
-    {
-      label: 'Monthly',
-      key: 'monthly',
-    },
-    { type: 'divider' },
-    {
-      label: 'Weekly',
-      key: 'weekly',
-    },
-    { type: 'divider' },
-    {
-      label: 'Daily',
-      key: 'daily',
-    },
-  ];
-
-  const onMenuClick: MenuProps['onClick'] = (e) => {
-    if (e.key === 'farms') {
-      console.log('farms clicked');
-    }
-  };
-
   const maximumTimelineSize = 16;
   const [offsetRange, setOffsetRange] = useState<number[]>([]);
   const [currentTimelineSize, setCurrentTimelineSize] = useState<number>(maximumTimelineSize);
   const [currentDataIndex, setCurrentDataIndex] = useState<number>(data.length - 1);
+
+  const [timescale, setTimescale] = useState<string>('daily');
 
   const getCurrentTimeline = () =>
     data.slice(Math.max(0, currentDataIndex - (maximumTimelineSize - 1)), currentDataIndex + 1);
@@ -76,6 +55,10 @@ function GraphArea(props: GraphAreaProps) {
   useEffect(() => {
     setCurrentTimelineSize(getCurrentTimeline().length);
   }, [currentDataIndex]);
+
+  const onTimescaleChange = (timescale: string) => {
+    setTimescale(timescale);
+  };
 
   return (
     <>
@@ -195,21 +178,33 @@ function GraphArea(props: GraphAreaProps) {
               </Row>
             ))}
         </Col>
-        <Menu
-          theme='light'
-          mode='vertical'
-          selectable={true}
-          selectedKeys={['weekly']}
-          onClick={onMenuClick}
-          items={items}
+        <Space.Compact
+          direction='vertical'
           style={{
             position: 'absolute',
             bottom: 32,
             right: 32,
-            borderInlineEnd: 0,
-            border: '1px solid',
           }}
-        />
+        >
+          <Button
+            type={timescale === 'daily' ? 'primary' : 'default'}
+            onClick={() => onTimescaleChange('daily')}
+          >
+            Daily
+          </Button>
+          <Button
+            type={timescale === 'weekly' ? 'primary' : 'default'}
+            onClick={() => onTimescaleChange('weekly')}
+          >
+            Weekly
+          </Button>
+          <Button
+            type={timescale === 'monthly' ? 'primary' : 'default'}
+            onClick={() => onTimescaleChange('monthly')}
+          >
+            Monthly
+          </Button>
+        </Space.Compact>
       </Row>
     </>
   );
