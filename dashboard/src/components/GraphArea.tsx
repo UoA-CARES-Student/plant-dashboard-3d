@@ -74,6 +74,23 @@ function GraphArea(props: GraphAreaProps) {
     },
   );
 
+  const units = {
+    volume: (
+      <>
+        mm<sup>3</sup>
+      </>
+    ),
+    area: (
+      <>
+        mm<sup>2</sup>
+      </>
+    ),
+    fruitlets: <></>,
+    leaves: <></>,
+    height: <>mm</>,
+    width: <>mm</>,
+  };
+
   const maximumTimelineSize = 16;
   const [offsetRange, setOffsetRange] = useState<number[]>([]);
   const [currentTimelineSize, setCurrentTimelineSize] = useState<number>(maximumTimelineSize);
@@ -248,7 +265,11 @@ function GraphArea(props: GraphAreaProps) {
                       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                       // @ts-ignore
                       getCurrentTimeline()[currentTimelineSize - 1][metric].toString()}{' '}
-                    mm^3
+                    {
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                      // @ts-ignore
+                      units[metric]
+                    }
                   </Text>
                 </Col>
               </Row>
