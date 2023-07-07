@@ -13,7 +13,7 @@ import {
 import theme from '../theme';
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
-import { isEqual, range } from 'lodash-es';
+import { chunk, groupBy, isEqual, range } from 'lodash-es';
 import { Data } from '../data';
 
 interface GraphAreaProps {
@@ -24,16 +24,81 @@ function GraphArea(props: GraphAreaProps) {
   const { data } = props;
   const { Title, Text } = Typography;
 
+  const dailyData = data;
+  const weeklyData = chunk(data, 7).map((weekArr) => {
+    const weekTotals = weekArr.reduce(
+      (acc, value) => ({
+        date: acc.date ? acc.date : value.date,
+        volume: acc.volume + value.volume,
+        area: acc.area + value.area,
+        fruitlets: acc.fruitlets + value.fruitlets,
+        leaves: acc.leaves + value.leaves,
+        height: acc.height + value.height,
+        width: acc.width + value.width,
+      }),
+      { date: '', volume: 0, area: 0, fruitlets: 0, leaves: 0, height: 0, width: 0 },
+    );
+    return {
+      date: weekTotals.date,
+      volume: (weekTotals.volume / weekArr.length).toFixed(2),
+      area: (weekTotals.area / weekArr.length).toFixed(2),
+      fruitlets: (weekTotals.fruitlets / weekArr.length).toFixed(2),
+      leaves: (weekTotals.leaves / weekArr.length).toFixed(2),
+      height: (weekTotals.height / weekArr.length).toFixed(2),
+      width: (weekTotals.width / weekArr.length).toFixed(2),
+    };
+  });
+  const monthlyData = Object.values(groupBy(data, (day) => dayjs(day.date).format('MM-YYYY'))).map(
+    (monthObj) => {
+      const monthTotals = monthObj.reduce(
+        (acc, value) => ({
+          date: acc.date ? acc.date : value.date,
+          volume: acc.volume + value.volume,
+          area: acc.area + value.area,
+          fruitlets: acc.fruitlets + value.fruitlets,
+          leaves: acc.leaves + value.leaves,
+          height: acc.height + value.height,
+          width: acc.width + value.width,
+        }),
+        { date: '', volume: 0, area: 0, fruitlets: 0, leaves: 0, height: 0, width: 0 },
+      );
+      return {
+        date: monthTotals.date,
+        volume: (monthTotals.volume / monthObj.length).toFixed(2),
+        area: (monthTotals.area / monthObj.length).toFixed(2),
+        fruitlets: (monthTotals.fruitlets / monthObj.length).toFixed(2),
+        leaves: (monthTotals.leaves / monthObj.length).toFixed(2),
+        height: (monthTotals.height / monthObj.length).toFixed(2),
+        width: (monthTotals.width / monthObj.length).toFixed(2),
+      };
+    },
+  );
+
   const maximumTimelineSize = 16;
   const [offsetRange, setOffsetRange] = useState<number[]>([]);
   const [currentTimelineSize, setCurrentTimelineSize] = useState<number>(maximumTimelineSize);
-  const [currentDataIndex, setCurrentDataIndex] = useState<number>(data.length - 1);
+  const [currentDataIndex, setCurrentDataIndex] = useState<number>(dailyData.length - 1);
 
   const [timescale, setTimescale] = useState<string>('daily');
 
-  const getCurrentTimeline = () =>
-    data.slice(Math.max(0, currentDataIndex - (maximumTimelineSize - 1)), currentDataIndex + 1);
-
+  const getCurrentTimeline = () => {
+    if (timescale === 'monthly') {
+      return monthlyData.slice(
+        Math.max(0, currentDataIndex - (maximumTimelineSize - 1)),
+        currentDataIndex + 1,
+      );
+    } else if (timescale === 'weekly') {
+      return weeklyData.slice(
+        Math.max(0, currentDataIndex - (maximumTimelineSize - 1)),
+        currentDataIndex + 1,
+      );
+    } else {
+      return dailyData.slice(
+        Math.max(0, currentDataIndex - (maximumTimelineSize - 1)),
+        currentDataIndex + 1,
+      );
+    }
+  };
   const onTimelineLeft = () => {
     if (currentDataIndex <= 1) {
       return;
@@ -42,7 +107,11 @@ function GraphArea(props: GraphAreaProps) {
   };
 
   const onTimelineRight = () => {
-    if (currentDataIndex >= data.length - 1) {
+    if (timescale === 'monthly' && currentDataIndex >= monthlyData.length - 1) {
+      return;
+    } else if (timescale === 'weekly' && currentDataIndex >= weeklyData.length - 1) {
+      return;
+    } else if (timescale === 'daily' && currentDataIndex >= dailyData.length - 1) {
       return;
     }
     setCurrentDataIndex(currentDataIndex + 1);
@@ -58,6 +127,13 @@ function GraphArea(props: GraphAreaProps) {
 
   const onTimescaleChange = (timescale: string) => {
     setTimescale(timescale);
+    if (timescale === 'monthly') {
+      setCurrentDataIndex(monthlyData.length - 1);
+    } else if (timescale === 'weekly') {
+      setCurrentDataIndex(weeklyData.length - 1);
+    } else {
+      setCurrentDataIndex(dailyData.length - 1);
+    }
   };
 
   return (
@@ -83,7 +159,7 @@ function GraphArea(props: GraphAreaProps) {
               onClick={() => onTimelineClick(index)}
             >
               {getCurrentTimeline()[index] &&
-                dayjs(getCurrentTimeline()[index].date).format('MMMDD')}
+                dayjs(getCurrentTimeline()[index].date).format('MMM DD')}
             </Button>
           ))}
         </Col>
