@@ -28,7 +28,7 @@ function GraphArea(props: GraphAreaProps) {
   const weeklyData = chunk(data, 7).map((weekArr) => {
     const weekTotals = weekArr.reduce(
       (acc, value) => ({
-        date: acc.date ? acc.date : value.date,
+        date: acc.date ? `${acc.date.split(' ')[0]} -> ${value.date}` : value.date,
         volume: acc.volume + value.volume,
         area: acc.area + value.area,
         fruitlets: acc.fruitlets + value.fruitlets,
@@ -52,7 +52,7 @@ function GraphArea(props: GraphAreaProps) {
     (monthObj) => {
       const monthTotals = monthObj.reduce(
         (acc, value) => ({
-          date: acc.date ? acc.date : value.date,
+          date: acc.date ? `${acc.date.split(' ')[0]} -> ${value.date}` : value.date,
           volume: acc.volume + value.volume,
           area: acc.area + value.area,
           fruitlets: acc.fruitlets + value.fruitlets,
@@ -208,7 +208,7 @@ function GraphArea(props: GraphAreaProps) {
               onClick={() => onTimelineClick(index)}
             >
               {getCurrentTimeline()[index] &&
-                dayjs(getCurrentTimeline()[index].date).format('MMM DD')}
+                dayjs(getCurrentTimeline()[index].date.split(' ')[0]).format('MMM DD')}
             </Button>
           ))}
         </Col>
