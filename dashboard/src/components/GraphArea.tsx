@@ -180,6 +180,7 @@ function GraphArea(props: GraphAreaProps) {
         </Col>
         <Space.Compact
           direction='vertical'
+          size='large'
           style={{
             position: 'absolute',
             bottom: 32,
