@@ -116,6 +116,19 @@ function GraphArea(props: GraphAreaProps) {
       );
     }
   };
+
+  const getCurrentDataLength = () => {
+    if (timescale === 'monthly') {
+      return monthlyData.length;
+    } else if (timescale === 'weekly') {
+      return weeklyData.length;
+    } else if (timescale === 'daily') {
+      return dailyData.length;
+    } else {
+      return 0;
+    }
+  };
+
   const onTimelineLeft = () => {
     if (currentDataIndex <= 1) {
       return;
@@ -124,17 +137,23 @@ function GraphArea(props: GraphAreaProps) {
   };
 
   const onTimelineRight = () => {
-    if (timescale === 'monthly' && currentDataIndex >= monthlyData.length - 1) {
-      return;
-    } else if (timescale === 'weekly' && currentDataIndex >= weeklyData.length - 1) {
-      return;
-    } else if (timescale === 'daily' && currentDataIndex >= dailyData.length - 1) {
+    if (currentDataIndex >= getCurrentDataLength() - 1) {
       return;
     }
     setCurrentDataIndex(currentDataIndex + 1);
   };
 
+  const onTimelineLastPage = () => {
+    if (currentDataIndex >= getCurrentDataLength() - 1) {
+      return;
+    }
+    setCurrentDataIndex(getCurrentDataLength() - 1);
+  };
+
   const onTimelineClick = (index: number) => {
+    if (currentDataIndex - (currentTimelineSize - 1 - index) === 0) {
+      return;
+    }
     setCurrentDataIndex(currentDataIndex - (currentTimelineSize - 1 - index));
   };
 
@@ -157,7 +176,7 @@ function GraphArea(props: GraphAreaProps) {
     <>
       <Row align={'middle'} style={{ backgroundColor: theme.palette.primary1, height: 48 }}>
         <Col span={4} style={{ display: 'flex', justifyContent: 'end', paddingRight: 32 }}>
-          <Button onClick={onTimelineLeft}>
+          <Button disabled={currentDataIndex <= 1} onClick={onTimelineLeft}>
             <MaterialSymbol icon='chevron_left' size={24} grade={-25} />
           </Button>
         </Col>
@@ -180,9 +199,18 @@ function GraphArea(props: GraphAreaProps) {
             </Button>
           ))}
         </Col>
-        <Col span={4} style={{ paddingLeft: 32 }}>
-          <Button onClick={onTimelineRight}>
+        <Col span={4} style={{ display: 'flex', gap: '8px', paddingLeft: 32 }}>
+          <Button
+            disabled={currentDataIndex >= getCurrentDataLength() - 1}
+            onClick={onTimelineRight}
+          >
             <MaterialSymbol icon='chevron_right' size={24} grade={-25} />
+          </Button>
+          <Button
+            disabled={currentDataIndex >= getCurrentDataLength() - 1}
+            onClick={onTimelineLastPage}
+          >
+            <MaterialSymbol icon='last_page' size={24} grade={-25} />
           </Button>
         </Col>
       </Row>
