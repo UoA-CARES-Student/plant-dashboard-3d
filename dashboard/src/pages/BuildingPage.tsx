@@ -40,11 +40,7 @@ function BuildingPage() {
           </ZoomableComponent>
         </Col>
       </Row>
-      <Row style={{ height: '50vh' }}>
-        <Col span={24}>
-          <GraphArea data={currentBuilding.data} />
-        </Col>
-      </Row>
+      <GraphArea data={currentBuilding.data} />
     </>
   );
 }

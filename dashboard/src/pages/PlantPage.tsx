@@ -1,8 +1,13 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import CentreErrorCard from '../components/CentreErrorCard';
 import farms, { Plant } from '../data.ts';
+import { Col, Row } from 'antd';
+import ZoomableComponent from '../components/ZoomableComponent.tsx';
+import theme from '../theme.ts';
+import samplePlant from '../assets/sample-plant.jpg';
 
 function PlantPage() {
+  const navigate = useNavigate();
   const { plantId } = useParams();
 
   if (!plantId || isNaN(parseInt(plantId))) {
@@ -26,7 +31,22 @@ function PlantPage() {
     return <CentreErrorCard text='Number is not a valid id' />;
   }
 
-  return <div>PlantPage {plantId}</div>;
+  return (
+    <>
+      <Row style={{ height: 'calc(50vh - 64px)' }}>
+        <Col span={12}></Col>
+
+        <Col span={12} style={{ height: '100%', background: theme.palette.bole1 }}>
+          <ZoomableComponent>
+            <img src={samplePlant} alt='plant' style={{ width: '100%' }} />
+          </ZoomableComponent>
+        </Col>
+      </Row>
+      <Row style={{ height: '50vh' }}>
+        <Col span={24}></Col>
+      </Row>
+    </>
+  );
 }
 
 export default PlantPage;

@@ -8,7 +8,6 @@ import farms, { Plot } from '../data';
 
 function PlotPage() {
   const navigate = useNavigate();
-
   const { plotId } = useParams();
 
   if (!plotId || isNaN(parseInt(plotId))) {

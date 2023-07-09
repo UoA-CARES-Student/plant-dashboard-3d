@@ -182,179 +182,181 @@ function GraphArea(props: GraphAreaProps) {
   };
 
   return (
-    <>
-      <Row align={'middle'} style={{ backgroundColor: theme.palette.primary1, height: 48 }}>
-        <Col
-          span={4}
-          style={{ display: 'flex', justifyContent: 'end', gap: '8px', paddingRight: 32 }}
-        >
-          <Button disabled={currentDataIndex < maximumTimelineSize} onClick={onTimelineFirstPage}>
-            <MaterialSymbol icon='first_page' size={24} grade={-25} />
-          </Button>
-          <Button disabled={currentDataIndex <= 1} onClick={onTimelineLeft}>
-            <MaterialSymbol icon='chevron_left' size={24} grade={-25} />
-          </Button>
-        </Col>
-        <Col span={16} style={{ height: '100%' }}>
-          {offsetRange.map((offset, index) => (
-            <Button
-              key={offset}
-              type={index === offsetRange.length - 1 ? 'primary' : 'text'}
-              style={{
-                position: 'absolute',
-                left: offset,
-                top: 8,
-                transform: 'translateX(-50%)',
-                padding: 4,
-              }}
-              onClick={() => onTimelineClick(index)}
-            >
-              {getCurrentTimeline()[index] &&
-                dayjs(getCurrentTimeline()[index].date.split(' ')[0]).format('MMM DD')}
+    <Row style={{ height: '50vh' }}>
+      <Col span={24}>
+        <Row align={'middle'} style={{ backgroundColor: theme.palette.primary1, height: 48 }}>
+          <Col
+            span={4}
+            style={{ display: 'flex', justifyContent: 'end', gap: '8px', paddingRight: 32 }}
+          >
+            <Button disabled={currentDataIndex < maximumTimelineSize} onClick={onTimelineFirstPage}>
+              <MaterialSymbol icon='first_page' size={24} grade={-25} />
             </Button>
-          ))}
-        </Col>
-        <Col span={4} style={{ display: 'flex', gap: '8px', paddingLeft: 32 }}>
-          <Button
-            disabled={currentDataIndex >= getCurrentDataLength() - 1}
-            onClick={onTimelineRight}
-          >
-            <MaterialSymbol icon='chevron_right' size={24} grade={-25} />
-          </Button>
-          <Button
-            disabled={currentDataIndex >= getCurrentDataLength() - 1}
-            onClick={onTimelineLastPage}
-          >
-            <MaterialSymbol icon='last_page' size={24} grade={-25} />
-          </Button>
-        </Col>
-      </Row>
-      <Row style={{ height: 'calc(50vh - 48px)', overflow: 'auto' }}>
-        <Col span={24}>
-          {(graphShown === null
-            ? Object.keys(data[0]).filter((key) => key !== 'date')
-            : [graphShown]
-          ).map((metric) => (
-            <Row key={metric} align={'middle'}>
-              <Col
-                span={4}
+            <Button disabled={currentDataIndex <= 1} onClick={onTimelineLeft}>
+              <MaterialSymbol icon='chevron_left' size={24} grade={-25} />
+            </Button>
+          </Col>
+          <Col span={16} style={{ height: '100%' }}>
+            {offsetRange.map((offset, index) => (
+              <Button
+                key={offset}
+                type={index === offsetRange.length - 1 ? 'primary' : 'text'}
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'end',
-                  gap: '8px',
-                  paddingRight: 24,
+                  position: 'absolute',
+                  left: offset,
+                  top: 8,
+                  transform: 'translateX(-50%)',
+                  padding: 4,
                 }}
+                onClick={() => onTimelineClick(index)}
               >
-                <Title level={4} style={{ margin: 0 }}>
-                  Avg. {metric.charAt(0).toUpperCase() + metric.slice(1)}
-                </Title>
-                <Button
-                  icon={<MaterialSymbol icon='fullscreen' size={32} grade={-25} />}
-                  onClick={() =>
-                    graphShown === null ? setGraphShown(metric) : setGraphShown(null)
-                  }
-                  style={{ width: 34, height: 34, padding: 0 }}
-                />
-              </Col>
-              <Col span={16}>
-                <ResponsiveContainer
-                  width='100%'
-                  height={graphShown === null ? 80 : 300}
-                  // onResize={(width) => {
-                  //   if (!currentBuilding) {
-                  //     return;
-                  //   }
-                  //   setOffsetRange(
-                  //     range(5, width - 10 + 5 + 1, (width - 10) / (getCurrentTimeline().length - 1)),
-                  //   );
-                  // }}
+                {getCurrentTimeline()[index] &&
+                  dayjs(getCurrentTimeline()[index].date.split(' ')[0]).format('MMM DD')}
+              </Button>
+            ))}
+          </Col>
+          <Col span={4} style={{ display: 'flex', gap: '8px', paddingLeft: 32 }}>
+            <Button
+              disabled={currentDataIndex >= getCurrentDataLength() - 1}
+              onClick={onTimelineRight}
+            >
+              <MaterialSymbol icon='chevron_right' size={24} grade={-25} />
+            </Button>
+            <Button
+              disabled={currentDataIndex >= getCurrentDataLength() - 1}
+              onClick={onTimelineLastPage}
+            >
+              <MaterialSymbol icon='last_page' size={24} grade={-25} />
+            </Button>
+          </Col>
+        </Row>
+        <Row style={{ height: 'calc(50vh - 48px)', overflow: 'auto' }}>
+          <Col span={24}>
+            {(graphShown === null
+              ? Object.keys(data[0]).filter((key) => key !== 'date')
+              : [graphShown]
+            ).map((metric) => (
+              <Row key={metric} align={'middle'}>
+                <Col
+                  span={4}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'end',
+                    gap: '8px',
+                    paddingRight: 24,
+                  }}
                 >
-                  <LineChart data={getCurrentTimeline()}>
-                    <CartesianGrid
-                      strokeDasharray='3 3'
-                      horizontal={false}
-                      verticalCoordinatesGenerator={(graphDetails) => {
-                        const range1 = range(
-                          graphDetails.xAxis.x,
-                          graphDetails.xAxis.width + graphDetails.xAxis.x + 1,
-                          graphDetails.xAxis.width / (graphDetails.xAxis.domain.length - 1),
-                        );
+                  <Title level={4} style={{ margin: 0 }}>
+                    Avg. {metric.charAt(0).toUpperCase() + metric.slice(1)}
+                  </Title>
+                  <Button
+                    icon={<MaterialSymbol icon='fullscreen' size={32} grade={-25} />}
+                    onClick={() =>
+                      graphShown === null ? setGraphShown(metric) : setGraphShown(null)
+                    }
+                    style={{ width: 34, height: 34, padding: 0 }}
+                  />
+                </Col>
+                <Col span={16}>
+                  <ResponsiveContainer
+                    width='100%'
+                    height={graphShown === null ? 80 : 300}
+                    // onResize={(width) => {
+                    //   if (!currentBuilding) {
+                    //     return;
+                    //   }
+                    //   setOffsetRange(
+                    //     range(5, width - 10 + 5 + 1, (width - 10) / (getCurrentTimeline().length - 1)),
+                    //   );
+                    // }}
+                  >
+                    <LineChart data={getCurrentTimeline()}>
+                      <CartesianGrid
+                        strokeDasharray='3 3'
+                        horizontal={false}
+                        verticalCoordinatesGenerator={(graphDetails) => {
+                          const range1 = range(
+                            graphDetails.xAxis.x,
+                            graphDetails.xAxis.width + graphDetails.xAxis.x + 1,
+                            graphDetails.xAxis.width / (graphDetails.xAxis.domain.length - 1),
+                          );
 
-                        if (!isEqual(range1, offsetRange)) {
-                          setOffsetRange(range1);
-                        }
+                          if (!isEqual(range1, offsetRange)) {
+                            setOffsetRange(range1);
+                          }
 
-                        return range1;
-                      }}
-                    />
-                    <XAxis dataKey='date' hide={true} />
-                    <YAxis domain={['dataMin', 'dataMax']} hide={true} />
-                    <Tooltip />
-                    <Line
-                      type='monotone'
-                      dataKey={metric}
-                      stroke={theme.palette.pumpkin4}
-                      isAnimationActive={false}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-              </Col>
-              <Col
-                span={4}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'start',
-                  gap: '8px',
-                  paddingLeft: 24,
-                }}
-              >
-                <Text style={{ margin: 0, fontSize: 20, color: theme.palette.primary6 }}>
-                  {getCurrentTimeline()[currentTimelineSize - 1] &&
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-ignore
-                    getCurrentTimeline()[currentTimelineSize - 1][metric].toString()}{' '}
-                  {
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-ignore
-                    units[metric]
-                  }
-                </Text>
-              </Col>
-            </Row>
-          ))}
-        </Col>
-        <Space.Compact
-          direction='vertical'
-          size='large'
-          style={{
-            position: 'absolute',
-            bottom: 32,
-            right: 32,
-          }}
-        >
-          <Button
-            type={timescale === 'daily' ? 'primary' : 'default'}
-            onClick={() => onTimescaleChange('daily')}
+                          return range1;
+                        }}
+                      />
+                      <XAxis dataKey='date' hide={true} />
+                      <YAxis domain={['dataMin', 'dataMax']} hide={true} />
+                      <Tooltip />
+                      <Line
+                        type='monotone'
+                        dataKey={metric}
+                        stroke={theme.palette.pumpkin4}
+                        isAnimationActive={false}
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </Col>
+                <Col
+                  span={4}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'start',
+                    gap: '8px',
+                    paddingLeft: 24,
+                  }}
+                >
+                  <Text style={{ margin: 0, fontSize: 20, color: theme.palette.primary6 }}>
+                    {getCurrentTimeline()[currentTimelineSize - 1] &&
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                      // @ts-ignore
+                      getCurrentTimeline()[currentTimelineSize - 1][metric].toString()}{' '}
+                    {
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                      // @ts-ignore
+                      units[metric]
+                    }
+                  </Text>
+                </Col>
+              </Row>
+            ))}
+          </Col>
+          <Space.Compact
+            direction='vertical'
+            size='large'
+            style={{
+              position: 'absolute',
+              bottom: 32,
+              right: 32,
+            }}
           >
-            Daily
-          </Button>
-          <Button
-            type={timescale === 'weekly' ? 'primary' : 'default'}
-            onClick={() => onTimescaleChange('weekly')}
-          >
-            Weekly
-          </Button>
-          <Button
-            type={timescale === 'monthly' ? 'primary' : 'default'}
-            onClick={() => onTimescaleChange('monthly')}
-          >
-            Monthly
-          </Button>
-        </Space.Compact>
-      </Row>
-    </>
+            <Button
+              type={timescale === 'daily' ? 'primary' : 'default'}
+              onClick={() => onTimescaleChange('daily')}
+            >
+              Daily
+            </Button>
+            <Button
+              type={timescale === 'weekly' ? 'primary' : 'default'}
+              onClick={() => onTimescaleChange('weekly')}
+            >
+              Weekly
+            </Button>
+            <Button
+              type={timescale === 'monthly' ? 'primary' : 'default'}
+              onClick={() => onTimescaleChange('monthly')}
+            >
+              Monthly
+            </Button>
+          </Space.Compact>
+        </Row>
+      </Col>
+    </Row>
   );
 }
 
