@@ -98,6 +98,8 @@ function GraphArea(props: GraphAreaProps) {
 
   const [timescale, setTimescale] = useState<string>('daily');
 
+  const [graphShown, setGraphShown] = useState<null | string>(null);
+
   const getCurrentTimeline = () => {
     if (timescale === 'monthly') {
       return monthlyData.slice(
@@ -227,94 +229,101 @@ function GraphArea(props: GraphAreaProps) {
           </Button>
         </Col>
       </Row>
-      <Row style={{ height: 'calc(100% - 48px)', overflow: 'auto' }}>
+      <Row style={{ height: 'calc(50vh - 48px)', overflow: 'auto' }}>
         <Col span={24}>
-          {Object.keys(data[0])
-            .filter((key) => key !== 'date')
-            .map((metric) => (
-              <Row key={metric} align={'middle'}>
-                <Col
-                  span={4}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'end',
-                    gap: '8px',
-                    paddingRight: 24,
-                  }}
+          {(graphShown === null
+            ? Object.keys(data[0]).filter((key) => key !== 'date')
+            : [graphShown]
+          ).map((metric) => (
+            <Row key={metric} align={'middle'}>
+              <Col
+                span={4}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'end',
+                  gap: '8px',
+                  paddingRight: 24,
+                }}
+              >
+                <Title level={4} style={{ margin: 0 }}>
+                  Avg. {metric.charAt(0).toUpperCase() + metric.slice(1)}
+                </Title>
+                <Button
+                  icon={<MaterialSymbol icon='fullscreen' size={32} grade={-25} />}
+                  onClick={() =>
+                    graphShown === null ? setGraphShown(metric) : setGraphShown(null)
+                  }
+                  style={{ width: 34, height: 34, padding: 0 }}
+                />
+              </Col>
+              <Col span={16}>
+                <ResponsiveContainer
+                  width='100%'
+                  height={graphShown === null ? 80 : 300}
+                  // onResize={(width) => {
+                  //   if (!currentBuilding) {
+                  //     return;
+                  //   }
+                  //   setOffsetRange(
+                  //     range(5, width - 10 + 5 + 1, (width - 10) / (getCurrentTimeline().length - 1)),
+                  //   );
+                  // }}
                 >
-                  <Title level={4} style={{ margin: 0 }}>
-                    Avg. {metric.charAt(0).toUpperCase() + metric.slice(1)}
-                  </Title>
-                  <MaterialSymbol icon='fullscreen' size={32} grade={-25} />
-                </Col>
-                <Col span={16}>
-                  <ResponsiveContainer
-                    width='100%'
-                    height={80}
-                    // onResize={(width) => {
-                    //   if (!currentBuilding) {
-                    //     return;
-                    //   }
-                    //   setOffsetRange(
-                    //     range(5, width - 10 + 5 + 1, (width - 10) / (getCurrentTimeline().length - 1)),
-                    //   );
-                    // }}
-                  >
-                    <LineChart data={getCurrentTimeline()}>
-                      <CartesianGrid
-                        strokeDasharray='3 3'
-                        horizontal={false}
-                        verticalCoordinatesGenerator={(graphDetails) => {
-                          const range1 = range(
-                            graphDetails.xAxis.x,
-                            graphDetails.xAxis.width + graphDetails.xAxis.x + 1,
-                            graphDetails.xAxis.width / (graphDetails.xAxis.domain.length - 1),
-                          );
+                  <LineChart data={getCurrentTimeline()}>
+                    <CartesianGrid
+                      strokeDasharray='3 3'
+                      horizontal={false}
+                      verticalCoordinatesGenerator={(graphDetails) => {
+                        const range1 = range(
+                          graphDetails.xAxis.x,
+                          graphDetails.xAxis.width + graphDetails.xAxis.x + 1,
+                          graphDetails.xAxis.width / (graphDetails.xAxis.domain.length - 1),
+                        );
 
-                          if (!isEqual(range1, offsetRange)) {
-                            setOffsetRange(range1);
-                          }
+                        if (!isEqual(range1, offsetRange)) {
+                          setOffsetRange(range1);
+                        }
 
-                          return range1;
-                        }}
-                      />
-                      <XAxis dataKey='date' hide={true} />
-                      <YAxis domain={['dataMin', 'dataMax']} hide={true} />
-                      <Tooltip />
-                      <Line
-                        type='monotone'
-                        dataKey={metric}
-                        stroke={theme.palette.pumpkin4}
-                        isAnimationActive={false}
-                      />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </Col>
-                <Col
-                  span={4}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'start',
-                    gap: '8px',
-                    paddingLeft: 24,
-                  }}
-                >
-                  <Text style={{ margin: 0, fontSize: 20, color: theme.palette.primary6 }}>
-                    {getCurrentTimeline()[currentTimelineSize - 1] &&
-                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                      // @ts-ignore
-                      getCurrentTimeline()[currentTimelineSize - 1][metric].toString()}{' '}
-                    {
-                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                      // @ts-ignore
-                      units[metric]
-                    }
-                  </Text>
-                </Col>
-              </Row>
-            ))}
+                        return range1;
+                      }}
+                    />
+                    <XAxis dataKey='date' hide={true} />
+                    <YAxis domain={['dataMin', 'dataMax']} hide={true} />
+                    <Tooltip />
+                    <Line
+                      type='monotone'
+                      dataKey={metric}
+                      stroke={theme.palette.pumpkin4}
+                      isAnimationActive={false}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </Col>
+              <Col
+                span={4}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'start',
+                  gap: '8px',
+                  paddingLeft: 24,
+                }}
+              >
+                <Text style={{ margin: 0, fontSize: 20, color: theme.palette.primary6 }}>
+                  {getCurrentTimeline()[currentTimelineSize - 1] &&
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-ignore
+                    getCurrentTimeline()[currentTimelineSize - 1][metric].toString()}{' '}
+                  {
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-ignore
+                    units[metric]
+                  }
+                </Text>
+              </Col>
+            </Row>
+          ))}
         </Col>
         <Space.Compact
           direction='vertical'
