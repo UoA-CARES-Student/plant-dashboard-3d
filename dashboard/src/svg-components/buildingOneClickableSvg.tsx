@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import farms, { Plot } from '../data';
+import { isMouseShortDistance } from '../utils/mousePosition';
 
 interface BuildingOneClickableSvgProps {
   onClickPlot: (id: number) => void;
@@ -11,6 +12,7 @@ export default function BuildingOneClickableSvg(props: BuildingOneClickableSvgPr
   const { onClickPlot, height, width } = props;
 
   const [hoveredPlot, setHoveredPlot] = useState<Plot | undefined>();
+  const [mouseXY, setMouseXY] = useState<[number, number] | null>(null);
 
   const building = farms[0].buildings[0];
 
@@ -1795,7 +1797,15 @@ export default function BuildingOneClickableSvg(props: BuildingOneClickableSvgPr
         strokeLinecap='round'
         strokeLinejoin='round'
         transform='translate(.52)'
-        onClick={() => onClickPlot(building.plots[0].id)}
+        onMouseDown={(e) => setMouseXY([e.clientX, e.clientY])}
+        onMouseUp={(e) => {
+          if (mouseXY && isMouseShortDistance(mouseXY[0], mouseXY[1], e.clientX, e.clientY)) {
+            onClickPlot(building.plots[0].id);
+            setMouseXY(null);
+          } else {
+            setMouseXY(null);
+          }
+        }}
         onMouseEnter={() => setHoveredPlot(building.plots[0])}
         onMouseLeave={() => setHoveredPlot(undefined)}
         style={{ cursor: 'pointer' }}
@@ -1853,7 +1863,15 @@ export default function BuildingOneClickableSvg(props: BuildingOneClickableSvgPr
         strokeLinecap='round'
         strokeLinejoin='round'
         transform='translate(.52)'
-        onClick={() => onClickPlot(building.plots[1].id)}
+        onMouseDown={(e) => setMouseXY([e.clientX, e.clientY])}
+        onMouseUp={(e) => {
+          if (mouseXY && isMouseShortDistance(mouseXY[0], mouseXY[1], e.clientX, e.clientY)) {
+            onClickPlot(building.plots[1].id);
+            setMouseXY(null);
+          } else {
+            setMouseXY(null);
+          }
+        }}
         onMouseEnter={() => setHoveredPlot(building.plots[1])}
         onMouseLeave={() => setHoveredPlot(undefined)}
         style={{ cursor: 'pointer' }}
@@ -1910,7 +1928,15 @@ export default function BuildingOneClickableSvg(props: BuildingOneClickableSvgPr
         strokeLinecap='round'
         strokeLinejoin='round'
         transform='translate(.52)'
-        onClick={() => onClickPlot(building.plots[2].id)}
+        onMouseDown={(e) => setMouseXY([e.clientX, e.clientY])}
+        onMouseUp={(e) => {
+          if (mouseXY && isMouseShortDistance(mouseXY[0], mouseXY[1], e.clientX, e.clientY)) {
+            onClickPlot(building.plots[2].id);
+            setMouseXY(null);
+          } else {
+            setMouseXY(null);
+          }
+        }}
         onMouseEnter={() => setHoveredPlot(building.plots[2])}
         onMouseLeave={() => setHoveredPlot(undefined)}
         style={{ cursor: 'pointer' }}
@@ -1967,7 +1993,15 @@ export default function BuildingOneClickableSvg(props: BuildingOneClickableSvgPr
         strokeLinecap='round'
         strokeLinejoin='round'
         transform='translate(.52)'
-        onClick={() => onClickPlot(building.plots[3].id)}
+        onMouseDown={(e) => setMouseXY([e.clientX, e.clientY])}
+        onMouseUp={(e) => {
+          if (mouseXY && isMouseShortDistance(mouseXY[0], mouseXY[1], e.clientX, e.clientY)) {
+            onClickPlot(building.plots[3].id);
+            setMouseXY(null);
+          } else {
+            setMouseXY(null);
+          }
+        }}
         onMouseEnter={() => setHoveredPlot(building.plots[3])}
         onMouseLeave={() => setHoveredPlot(undefined)}
         style={{ cursor: 'pointer' }}
@@ -2024,7 +2058,15 @@ export default function BuildingOneClickableSvg(props: BuildingOneClickableSvgPr
         strokeLinecap='round'
         strokeLinejoin='round'
         transform='translate(.52)'
-        onClick={() => onClickPlot(building.plots[4].id)}
+        onMouseDown={(e) => setMouseXY([e.clientX, e.clientY])}
+        onMouseUp={(e) => {
+          if (mouseXY && isMouseShortDistance(mouseXY[0], mouseXY[1], e.clientX, e.clientY)) {
+            onClickPlot(building.plots[4].id);
+            setMouseXY(null);
+          } else {
+            setMouseXY(null);
+          }
+        }}
         onMouseEnter={() => setHoveredPlot(building.plots[4])}
         onMouseLeave={() => setHoveredPlot(undefined)}
         style={{ cursor: 'pointer' }}
@@ -2081,7 +2123,15 @@ export default function BuildingOneClickableSvg(props: BuildingOneClickableSvgPr
         strokeLinecap='round'
         strokeLinejoin='round'
         transform='translate(.52)'
-        onClick={() => onClickPlot(building.plots[5].id)}
+        onMouseDown={(e) => setMouseXY([e.clientX, e.clientY])}
+        onMouseUp={(e) => {
+          if (mouseXY && isMouseShortDistance(mouseXY[0], mouseXY[1], e.clientX, e.clientY)) {
+            onClickPlot(building.plots[5].id);
+            setMouseXY(null);
+          } else {
+            setMouseXY(null);
+          }
+        }}
         onMouseEnter={() => setHoveredPlot(building.plots[5])}
         onMouseLeave={() => setHoveredPlot(undefined)}
         style={{ cursor: 'pointer' }}
@@ -2138,7 +2188,15 @@ export default function BuildingOneClickableSvg(props: BuildingOneClickableSvgPr
         strokeLinecap='round'
         strokeLinejoin='round'
         transform='translate(.52)'
-        onClick={() => onClickPlot(building.plots[6].id)}
+        onMouseDown={(e) => setMouseXY([e.clientX, e.clientY])}
+        onMouseUp={(e) => {
+          if (mouseXY && isMouseShortDistance(mouseXY[0], mouseXY[1], e.clientX, e.clientY)) {
+            onClickPlot(building.plots[6].id);
+            setMouseXY(null);
+          } else {
+            setMouseXY(null);
+          }
+        }}
         onMouseEnter={() => setHoveredPlot(building.plots[6])}
         onMouseLeave={() => setHoveredPlot(undefined)}
         style={{ cursor: 'pointer' }}
@@ -2195,7 +2253,15 @@ export default function BuildingOneClickableSvg(props: BuildingOneClickableSvgPr
         strokeLinecap='round'
         strokeLinejoin='round'
         transform='translate(.52)'
-        onClick={() => onClickPlot(building.plots[7].id)}
+        onMouseDown={(e) => setMouseXY([e.clientX, e.clientY])}
+        onMouseUp={(e) => {
+          if (mouseXY && isMouseShortDistance(mouseXY[0], mouseXY[1], e.clientX, e.clientY)) {
+            onClickPlot(building.plots[7].id);
+            setMouseXY(null);
+          } else {
+            setMouseXY(null);
+          }
+        }}
         onMouseEnter={() => setHoveredPlot(building.plots[7])}
         onMouseLeave={() => setHoveredPlot(undefined)}
         style={{ cursor: 'pointer' }}
@@ -2252,7 +2318,15 @@ export default function BuildingOneClickableSvg(props: BuildingOneClickableSvgPr
         strokeLinecap='round'
         strokeLinejoin='round'
         transform='translate(.52)'
-        onClick={() => onClickPlot(building.plots[8].id)}
+        onMouseDown={(e) => setMouseXY([e.clientX, e.clientY])}
+        onMouseUp={(e) => {
+          if (mouseXY && isMouseShortDistance(mouseXY[0], mouseXY[1], e.clientX, e.clientY)) {
+            onClickPlot(building.plots[8].id);
+            setMouseXY(null);
+          } else {
+            setMouseXY(null);
+          }
+        }}
         onMouseEnter={() => setHoveredPlot(building.plots[8])}
         onMouseLeave={() => setHoveredPlot(undefined)}
         style={{ cursor: 'pointer' }}

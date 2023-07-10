@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import farms, { Plant } from '../data';
+import { isMouseShortDistance } from '../utils/mousePosition';
 
 interface PlotAOneClickableSvgProps {
   onClickPlant: (id: number) => void;
@@ -11,6 +12,7 @@ export default function PlotAOneClickableSvg(props: PlotAOneClickableSvgProps) {
   const { onClickPlant, height, width } = props;
 
   const [hoveredPlant, setHoveredPlant] = useState<Plant | undefined>();
+  const [mouseXY, setMouseXY] = useState<[number, number] | null>(null);
 
   const plot = farms[0].buildings[0].plots[0];
   return (
@@ -478,7 +480,15 @@ export default function PlotAOneClickableSvg(props: PlotAOneClickableSvgProps) {
         fillOpacity='1'
         strokeLinecap='round'
         strokeLinejoin='round'
-        onClick={() => onClickPlant(plot.plants[0].id)}
+        onMouseDown={(e) => setMouseXY([e.clientX, e.clientY])}
+        onMouseUp={(e) => {
+          if (mouseXY && isMouseShortDistance(mouseXY[0], mouseXY[1], e.clientX, e.clientY)) {
+            onClickPlant(plot.plants[0].id);
+            setMouseXY(null);
+          } else {
+            setMouseXY(null);
+          }
+        }}
         onMouseEnter={() => setHoveredPlant(plot.plants[0])}
         onMouseLeave={() => setHoveredPlant(undefined)}
         style={{ cursor: 'pointer' }}
@@ -534,7 +544,15 @@ export default function PlotAOneClickableSvg(props: PlotAOneClickableSvgProps) {
         fillOpacity='1'
         strokeLinecap='round'
         strokeLinejoin='round'
-        onClick={() => onClickPlant(plot.plants[1].id)}
+        onMouseDown={(e) => setMouseXY([e.clientX, e.clientY])}
+        onMouseUp={(e) => {
+          if (mouseXY && isMouseShortDistance(mouseXY[0], mouseXY[1], e.clientX, e.clientY)) {
+            onClickPlant(plot.plants[1].id);
+            setMouseXY(null);
+          } else {
+            setMouseXY(null);
+          }
+        }}
         onMouseEnter={() => setHoveredPlant(plot.plants[1])}
         onMouseLeave={() => setHoveredPlant(undefined)}
         style={{ cursor: 'pointer' }}
@@ -590,7 +608,15 @@ export default function PlotAOneClickableSvg(props: PlotAOneClickableSvgProps) {
         fillOpacity='1'
         strokeLinecap='round'
         strokeLinejoin='round'
-        onClick={() => onClickPlant(plot.plants[2].id)}
+        onMouseDown={(e) => setMouseXY([e.clientX, e.clientY])}
+        onMouseUp={(e) => {
+          if (mouseXY && isMouseShortDistance(mouseXY[0], mouseXY[1], e.clientX, e.clientY)) {
+            onClickPlant(plot.plants[2].id);
+            setMouseXY(null);
+          } else {
+            setMouseXY(null);
+          }
+        }}
         onMouseEnter={() => setHoveredPlant(plot.plants[2])}
         onMouseLeave={() => setHoveredPlant(undefined)}
         style={{ cursor: 'pointer' }}
