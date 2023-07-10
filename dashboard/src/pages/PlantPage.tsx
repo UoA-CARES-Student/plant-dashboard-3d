@@ -1,13 +1,13 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import CentreErrorCard from '../components/CentreErrorCard';
 import farms, { Plant } from '../data.ts';
 import { Col, Row } from 'antd';
 import ZoomableComponent from '../components/ZoomableComponent.tsx';
 import theme from '../theme.ts';
 import samplePlant from '../assets/sample-plant.jpg';
+import GraphArea from '../components/GraphArea.tsx';
 
 function PlantPage() {
-  const navigate = useNavigate();
   const { plantId } = useParams();
 
   if (!plantId || isNaN(parseInt(plantId))) {
@@ -42,9 +42,7 @@ function PlantPage() {
           </ZoomableComponent>
         </Col>
       </Row>
-      <Row style={{ height: '50vh' }}>
-        <Col span={24}></Col>
-      </Row>
+      <GraphArea data={currentPlant.data} />
     </>
   );
 }

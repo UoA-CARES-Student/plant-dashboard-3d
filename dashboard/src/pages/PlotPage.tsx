@@ -5,6 +5,7 @@ import { Col, Row } from 'antd/es/grid';
 import theme from '../theme';
 import CentreErrorCard from '../components/CentreErrorCard';
 import farms, { Plot } from '../data';
+import GraphArea from '../components/GraphArea';
 
 function PlotPage() {
   const navigate = useNavigate();
@@ -40,9 +41,7 @@ function PlotPage() {
           </ZoomableComponent>
         </Col>
       </Row>
-      <Row style={{ height: '50vh' }}>
-        <Col span={24}></Col>
-      </Row>
+      <GraphArea data={currentPlot.data} />
     </>
   );
 }
