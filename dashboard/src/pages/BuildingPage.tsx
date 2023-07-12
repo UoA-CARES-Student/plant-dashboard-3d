@@ -1,12 +1,13 @@
 import Col from 'antd/es/col';
 import Row from 'antd/es/row';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import BuildingOneClickableSvg from '../svg-components/buildingOneClickableSvg';
 import theme from '../theme';
 import ZoomableComponent from '../components/ZoomableComponent';
 import farms, { Building } from '../data.ts';
 import CentreErrorCard from '../components/CentreErrorCard.tsx';
 import GraphArea from '../components/GraphArea.tsx';
+import { Breadcrumb } from 'antd';
 
 function BuildingPage() {
   const navigate = useNavigate();
@@ -32,7 +33,22 @@ function BuildingPage() {
   return (
     <>
       <Row style={{ height: 'calc(50vh - 64px)' }}>
-        <Col span={12}></Col>
+        <Col span={12} style={{ padding: '8px 16px' }}>
+          <Row>
+            <Col span={24}>
+              <Breadcrumb
+                items={[
+                  {
+                    title: <Link to='/'>Farms</Link>,
+                  },
+                  {
+                    title: currentBuilding.buildingName,
+                  },
+                ]}
+              />
+            </Col>
+          </Row>
+        </Col>
 
         <Col span={12} style={{ height: '100%', background: theme.palette.bole1 }}>
           <ZoomableComponent>
