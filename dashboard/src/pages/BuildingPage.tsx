@@ -8,6 +8,7 @@ import farms, { Building } from '../data.ts';
 import CentreErrorCard from '../components/CentreErrorCard.tsx';
 import GraphArea from '../components/GraphArea.tsx';
 import { Breadcrumb } from 'antd';
+import EnvironmentArea from '../components/EnvironmentArea.tsx';
 
 function BuildingPage() {
   const navigate = useNavigate();
@@ -48,6 +49,7 @@ function BuildingPage() {
               />
             </Col>
           </Row>
+          <EnvironmentArea environmentData={currentBuilding.environment[0]} />
         </Col>
 
         <Col span={12} style={{ height: '100%', background: theme.palette.bole1 }}>
