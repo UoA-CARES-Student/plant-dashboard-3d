@@ -2564,7 +2564,7 @@ export default [
             plants: [
               {
                 id: 0,
-                plantName: '001',
+                plantName: 'Plant 001',
                 data: [
                   {
                     date: '2021-07-01',
@@ -3470,11 +3470,11 @@ export default [
               },
               {
                 id: 1,
-                plantName: '002',
+                plantName: 'Plant 002',
               },
               {
                 id: 2,
-                plantName: '003',
+                plantName: 'Plant 003',
               },
             ],
           },
