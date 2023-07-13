@@ -3,7 +3,7 @@ import { Environment } from '../data';
 import EnvironmentStatisticsCard from './EnvironmentStatisticCard';
 
 interface EnvironmentAreaProps {
-  environmentData: Environment;
+  environmentData?: Environment;
 }
 
 function EnvironmentArea(props: EnvironmentAreaProps) {
@@ -22,7 +22,7 @@ function EnvironmentArea(props: EnvironmentAreaProps) {
             <EnvironmentStatisticsCard
               icon='device_thermostat'
               text='Tempurature'
-              value={environmentData.temperature}
+              value={environmentData?.temperature ?? 0}
             />
           </Col>
         </Row>

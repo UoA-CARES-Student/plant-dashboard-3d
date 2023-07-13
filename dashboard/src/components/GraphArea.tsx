@@ -18,10 +18,11 @@ import { Data } from '../data';
 
 interface GraphAreaProps {
   data: Data[];
+  onDateChanged: (newDate: string) => void;
 }
 
 function GraphArea(props: GraphAreaProps) {
-  const { data } = props;
+  const { data, onDateChanged } = props;
   const { Title, Text } = Typography;
 
   const dailyData = data;
@@ -168,6 +169,7 @@ function GraphArea(props: GraphAreaProps) {
 
   useEffect(() => {
     setCurrentTimelineSize(getCurrentTimeline().length);
+    onDateChanged(getCurrentTimeline()[getCurrentTimeline().length - 1].date);
   }, [currentDataIndex]);
 
   const onTimescaleChange = (timescale: string) => {

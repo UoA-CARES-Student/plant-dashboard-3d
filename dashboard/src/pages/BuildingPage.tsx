@@ -9,6 +9,7 @@ import CentreErrorCard from '../components/CentreErrorCard.tsx';
 import GraphArea from '../components/GraphArea.tsx';
 import { Breadcrumb } from 'antd';
 import EnvironmentArea from '../components/EnvironmentArea.tsx';
+import { useState } from 'react';
 
 function BuildingPage() {
   const navigate = useNavigate();
@@ -31,6 +32,8 @@ function BuildingPage() {
     return <CentreErrorCard text='Number is not a valid id' />;
   }
 
+  const [currentDate, setCurrentDate] = useState<string>();
+
   return (
     <>
       <Row style={{ height: 'calc(50vh - 64px)' }}>
@@ -49,7 +52,9 @@ function BuildingPage() {
               />
             </Col>
           </Row>
-          <EnvironmentArea environmentData={currentBuilding.environment[0]} />
+          <EnvironmentArea
+            environmentData={currentBuilding.environment.find((env) => env.date === currentDate)}
+          />
         </Col>
 
         <Col span={12} style={{ height: '100%', background: theme.palette.bole1 }}>
@@ -58,7 +63,10 @@ function BuildingPage() {
           </ZoomableComponent>
         </Col>
       </Row>
-      <GraphArea data={currentBuilding.data} />
+      <GraphArea
+        data={currentBuilding.data}
+        onDateChanged={(newDate: string) => setCurrentDate(newDate)}
+      />
     </>
   );
 }
