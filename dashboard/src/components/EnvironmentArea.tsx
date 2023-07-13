@@ -22,7 +22,36 @@ function EnvironmentArea(props: EnvironmentAreaProps) {
             <EnvironmentStatisticsCard
               icon='device_thermostat'
               text='Tempurature'
-              value={environmentData?.temperature ?? 0}
+              value={
+                <>
+                  {environmentData?.temperature ?? 0} <sup>o</sup>C
+                </>
+              }
+            />
+          </Col>
+          <Col span={12}>
+            <EnvironmentStatisticsCard
+              icon='fluorescent'
+              text='Fluorescents'
+              value={<>{environmentData?.fluorescents ?? 0} fc</>}
+            />
+          </Col>
+          <Col span={12}>
+            <EnvironmentStatisticsCard
+              icon='blur_on'
+              text='CO2 Conc.'
+              value={<>{environmentData?.co2Concentration ?? 0} ppm</>}
+            />
+          </Col>
+          <Col span={12}>
+            <EnvironmentStatisticsCard
+              icon='humidity_high'
+              text='Irrigation'
+              value={
+                <>
+                  {environmentData?.irrigation ?? 0} m<sup>3</sup>/s
+                </>
+              }
             />
           </Col>
         </Row>

@@ -5,17 +5,20 @@ import theme from '../theme';
 interface EnvironmentStatisticsCardProps {
   icon: string;
   text: string;
-  value: string | number;
+  value: string | number | JSX.Element;
 }
 
 function EnvironmentStatisticsCard(props: EnvironmentStatisticsCardProps) {
   const { icon, text, value } = props;
   return (
-    <Card bodyStyle={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+    <Card
+      bodyStyle={{ display: 'flex', alignItems: 'center', gap: '8px', height: '100%' }}
+      style={{ height: '100%' }}
+    >
       <MaterialSymbol icon={icon} size={24} grade={-25} color={theme.palette.primary6} />
       <Typography style={{ color: theme.palette.primary6, fontSize: '18px' }}>{text}</Typography>
       <Typography style={{ fontSize: '20px', fontWeight: 'bold', marginLeft: 'auto' }}>
-        {value} <sup>o</sup>C
+        {value}
       </Typography>
     </Card>
   );
