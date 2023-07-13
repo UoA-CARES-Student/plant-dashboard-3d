@@ -7,6 +7,8 @@ import CentreErrorCard from '../components/CentreErrorCard';
 import farms, { Building, Plot } from '../data';
 import GraphArea from '../components/GraphArea';
 import { Breadcrumb } from 'antd';
+import { useState } from 'react';
+import EnvironmentArea from '../components/EnvironmentArea';
 
 function PlotPage() {
   const navigate = useNavigate();
@@ -33,6 +35,8 @@ function PlotPage() {
     return <CentreErrorCard text='Number is not a valid id' />;
   }
 
+  const [currentDate, setCurrentDate] = useState<string>();
+
   return (
     <>
       <Row style={{ height: 'calc(50vh - 64px)' }}>
@@ -58,6 +62,9 @@ function PlotPage() {
               />
             </Col>
           </Row>
+          <EnvironmentArea
+            environmentData={currentBuilding?.environment.find((env) => env.date === currentDate)}
+          />
         </Col>
 
         <Col span={12} style={{ height: '100%', background: theme.palette.bole1 }}>
@@ -66,7 +73,10 @@ function PlotPage() {
           </ZoomableComponent>
         </Col>
       </Row>
-      <GraphArea data={currentPlot.data} />
+      <GraphArea
+        data={currentPlot.data}
+        onDateChanged={(newDate: string) => setCurrentDate(newDate)}
+      />
     </>
   );
 }

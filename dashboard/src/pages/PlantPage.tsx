@@ -6,6 +6,8 @@ import ZoomableComponent from '../components/ZoomableComponent.tsx';
 import theme from '../theme.ts';
 import samplePlant from '../assets/sample-plant.jpg';
 import GraphArea from '../components/GraphArea.tsx';
+import { useState } from 'react';
+import EnvironmentArea from '../components/EnvironmentArea.tsx';
 
 function PlantPage() {
   const { plantId } = useParams();
@@ -35,6 +37,8 @@ function PlantPage() {
     return <CentreErrorCard text='Number is not a valid id' />;
   }
 
+  const [currentDate, setCurrentDate] = useState<string>();
+
   return (
     <>
       <Row style={{ height: 'calc(50vh - 64px)' }}>
@@ -63,6 +67,9 @@ function PlantPage() {
               />
             </Col>
           </Row>
+          <EnvironmentArea
+            environmentData={currentBuilding?.environment.find((env) => env.date === currentDate)}
+          />
         </Col>
 
         <Col span={12} style={{ height: '100%', background: theme.palette.bole1 }}>
@@ -71,7 +78,10 @@ function PlantPage() {
           </ZoomableComponent>
         </Col>
       </Row>
-      <GraphArea data={currentPlant.data} />
+      <GraphArea
+        data={currentPlant.data}
+        onDateChanged={(newDate: string) => setCurrentDate(newDate)}
+      />
     </>
   );
 }
