@@ -2,7 +2,6 @@ import { Col, Row, Typography } from 'antd';
 import { Environment } from '../data';
 import EnvironmentStatisticsCard from './EnvironmentStatisticCard';
 import AlertCard from './AlertCard';
-import { WheelEventHandler } from 'react';
 
 interface EnvironmentAreaProps {
   currentEnvironmentData?: Environment;
