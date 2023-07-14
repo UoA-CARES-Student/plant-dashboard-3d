@@ -1,14 +1,61 @@
 import { Col, Row, Typography } from 'antd';
 import { Environment } from '../data';
 import EnvironmentStatisticsCard from './EnvironmentStatisticCard';
+import AlertCard from './AlertCard';
 
 interface EnvironmentAreaProps {
-  environmentData?: Environment;
+  currentEnvironmentData?: Environment;
+  allEnvironmentData?: Environment[];
 }
 
 function EnvironmentArea(props: EnvironmentAreaProps) {
-  const { environmentData } = props;
+  const { currentEnvironmentData, allEnvironmentData } = props;
   const { Title } = Typography;
+
+  const icons = {
+    temperature: 'device_thermostat',
+    fluorescents: 'fluorescent',
+    co2Concentration: 'blur_on',
+    irrigation: 'humidity_high',
+  };
+
+  const alerts: {
+    direction: 'up' | 'down';
+    text: string;
+    icon: string;
+    date: string;
+  }[] = [];
+  if (allEnvironmentData) {
+    for (let i = allEnvironmentData.length - 1; i > 0; i--) {
+      for (const key of Object.keys(allEnvironmentData[0]) as Array<
+        'date' | 'temperature' | 'fluorescents' | 'co2Concentration' | 'irrigation'
+      >) {
+        if (key === 'date') {
+          continue;
+        }
+        if (allEnvironmentData[i][key] > allEnvironmentData[i - 1][key] * 1.1) {
+          alerts.push({
+            direction: 'up',
+            text: `Rise in ${key}`,
+            icon: icons[key],
+            date: allEnvironmentData[i].date,
+          });
+        }
+        if (allEnvironmentData[i][key] < allEnvironmentData[i - 1][key] * 0.9) {
+          alerts.push({
+            direction: 'down',
+            text: `Fall in ${key}`,
+            icon: icons[key],
+            date: allEnvironmentData[i].date,
+          });
+        }
+      }
+    }
+  }
+
+  console.log(allEnvironmentData);
+  console.log(alerts);
+
   return (
     <Row style={{ paddingLeft: 16, paddingRight: 16 }}>
       <Col span={24}>
@@ -17,14 +64,14 @@ function EnvironmentArea(props: EnvironmentAreaProps) {
             <Title level={4}>Environment</Title>
           </Col>
         </Row>
-        <Row gutter={[8, 8]}>
+        <Row gutter={[8, 8]} style={{ marginBottom: 24 }}>
           <Col span={12}>
             <EnvironmentStatisticsCard
               icon='device_thermostat'
               text='Tempurature'
               value={
                 <>
-                  {environmentData?.temperature ?? 0} <sup>o</sup>C
+                  {currentEnvironmentData?.temperature ?? 0} <sup>o</sup>C
                 </>
               }
             />
@@ -33,14 +80,14 @@ function EnvironmentArea(props: EnvironmentAreaProps) {
             <EnvironmentStatisticsCard
               icon='fluorescent'
               text='Fluorescents'
-              value={<>{environmentData?.fluorescents ?? 0} fc</>}
+              value={<>{currentEnvironmentData?.fluorescents ?? 0} fc</>}
             />
           </Col>
           <Col span={12}>
             <EnvironmentStatisticsCard
               icon='blur_on'
               text='CO2 Conc.'
-              value={<>{environmentData?.co2Concentration ?? 0} ppm</>}
+              value={<>{currentEnvironmentData?.co2Concentration ?? 0} ppm</>}
             />
           </Col>
           <Col span={12}>
@@ -49,10 +96,17 @@ function EnvironmentArea(props: EnvironmentAreaProps) {
               text='Irrigation'
               value={
                 <>
-                  {environmentData?.irrigation ?? 0} m<sup>3</sup>/s
+                  {currentEnvironmentData?.irrigation ?? 0} m<sup>3</sup>/s
                 </>
               }
             />
+          </Col>
+        </Row>
+        <Row>
+          <Col span={24} style={{ display: 'flex', gap: 8 }}>
+            {alerts.map((alert) => (
+              <AlertCard key={alert.date} {...alert} />
+            ))}
           </Col>
         </Row>
       </Col>

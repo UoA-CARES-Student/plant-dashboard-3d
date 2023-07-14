@@ -53,7 +53,16 @@ function BuildingPage() {
             </Col>
           </Row>
           <EnvironmentArea
-            environmentData={currentBuilding.environment.find((env) => env.date === currentDate)}
+            currentEnvironmentData={currentBuilding.environment.find(
+              (env) => env.date === currentDate,
+            )}
+            allEnvironmentData={currentBuilding.environment.slice(
+              Math.max(
+                0,
+                currentBuilding.environment.findIndex((env) => env.date === currentDate) + 1 - 16,
+              ),
+              currentBuilding.environment.findIndex((env) => env.date === currentDate) + 1,
+            )}
           />
         </Col>
 

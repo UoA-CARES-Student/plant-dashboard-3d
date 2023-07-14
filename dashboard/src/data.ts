@@ -61,7 +61,7 @@ export default [
           },
           {
             date: '2021-07-02',
-            temperature: 23.1,
+            temperature: 25.1,
             fluorescents: 7203,
             co2Concentration: 765,
             irrigation: 1.6,
@@ -721,7 +721,7 @@ export default [
             date: '2021-10-04',
             temperature: 25.7,
             fluorescents: 9444,
-            co2Concentration: 1799,
+            co2Concentration: 2003,
             irrigation: 0.0,
           },
           {
@@ -747,7 +747,7 @@ export default [
           },
           {
             date: '2021-10-08',
-            temperature: 22.0,
+            temperature: 19.1,
             fluorescents: 9066,
             co2Concentration: 1843,
             irrigation: 0.0,
