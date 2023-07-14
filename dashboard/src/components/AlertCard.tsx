@@ -12,7 +12,7 @@ interface AlertCardProps {
 function AlertCard(props: AlertCardProps) {
   const { direction, text, icon, date } = props;
   return (
-    <Card bodyStyle={{ padding: 16 }}>
+    <Card bodyStyle={{ padding: 16 }} style={{ flexShrink: 0 }}>
       <Row gutter={12}>
         <Col>
           <MaterialSymbol

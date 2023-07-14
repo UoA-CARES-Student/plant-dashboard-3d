@@ -2,6 +2,7 @@ import { Col, Row, Typography } from 'antd';
 import { Environment } from '../data';
 import EnvironmentStatisticsCard from './EnvironmentStatisticCard';
 import AlertCard from './AlertCard';
+import { WheelEventHandler } from 'react';
 
 interface EnvironmentAreaProps {
   currentEnvironmentData?: Environment;
@@ -53,6 +54,16 @@ function EnvironmentArea(props: EnvironmentAreaProps) {
     }
   }
 
+  const handleScroll = (event: WheelEvent) => {
+    const container = event.currentTarget as Element;
+    const scrollAmount = event.deltaY;
+    container.scrollTo({
+      top: 0,
+      left: container.scrollLeft + scrollAmount,
+      behavior: 'auto',
+    });
+  };
+
   console.log(allEnvironmentData);
   console.log(alerts);
 
@@ -64,7 +75,7 @@ function EnvironmentArea(props: EnvironmentAreaProps) {
             <Title level={4}>Environment</Title>
           </Col>
         </Row>
-        <Row gutter={[8, 8]} style={{ marginBottom: 24 }}>
+        <Row gutter={[8, 8]}>
           <Col span={12}>
             <EnvironmentStatisticsCard
               icon='device_thermostat'
@@ -103,7 +114,18 @@ function EnvironmentArea(props: EnvironmentAreaProps) {
           </Col>
         </Row>
         <Row>
-          <Col span={24} style={{ display: 'flex', gap: 8 }}>
+          <Col>
+            <Title level={4}>Alerts</Title>
+          </Col>
+        </Row>
+        <Row>
+          <Col
+            span={24}
+            style={{ display: 'flex', gap: 8, overflowX: 'auto' }}
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            onWheel={handleScroll}
+          >
             {alerts.map((alert) => (
               <AlertCard key={alert.date} {...alert} />
             ))}
