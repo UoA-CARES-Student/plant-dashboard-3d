@@ -99,6 +99,7 @@ function PlantPage() {
       </Row>
       <GraphArea
         data={currentPlant.data}
+        events={currentBuilding?.events ?? []}
         onDateChanged={(newDateRange: { startDate: string; endDate: string }) =>
           setCurrentDateRange(newDateRange)
         }

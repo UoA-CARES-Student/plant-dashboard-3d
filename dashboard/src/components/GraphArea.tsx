@@ -1,5 +1,5 @@
 import { Col, Row } from 'antd/es/grid';
-import { Button, Space, Typography } from 'antd';
+import { Button, Space, Typography, Tooltip as AntTooltip } from 'antd';
 import { MaterialSymbol } from 'react-material-symbols';
 import {
   CartesianGrid,
@@ -14,15 +14,16 @@ import theme from '../theme';
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import { chunk, groupBy, isEqual, range } from 'lodash-es';
-import { Data } from '../data';
+import { Data, Event } from '../data';
 
 interface GraphAreaProps {
   data: Data[];
+  events: Event[];
   onDateChanged: (newDateRange: { startDate: string; endDate: string }) => void;
 }
 
 function GraphArea(props: GraphAreaProps) {
-  const { data, onDateChanged } = props;
+  const { data, events, onDateChanged } = props;
   const { Title, Text } = Typography;
 
   const dailyData = data;
@@ -202,23 +203,43 @@ function GraphArea(props: GraphAreaProps) {
             </Button>
           </Col>
           <Col span={16} style={{ height: '100%' }}>
-            {offsetRange.map((offset, index) => (
-              <Button
-                key={offset}
-                type={index === offsetRange.length - 1 ? 'primary' : 'text'}
-                style={{
-                  position: 'absolute',
-                  left: offset,
-                  top: 8,
-                  transform: 'translateX(-50%)',
-                  padding: 4,
-                }}
-                onClick={() => onTimelineClick(index)}
-              >
-                {getCurrentTimeline()[index] &&
-                  dayjs(getCurrentTimeline()[index].date.split(' ')[0]).format('MMM DD')}
-              </Button>
-            ))}
+            {offsetRange.map((offset, index) =>
+              events.find((event) => event.date === getCurrentTimeline()[index].date) ? (
+                <AntTooltip key={offset} title={'pause lil bro'}>
+                  <Button
+                    type={index === offsetRange.length - 1 ? 'primary' : 'text'}
+                    style={{
+                      position: 'absolute',
+                      left: offset,
+                      top: 8,
+                      transform: 'translateX(-50%)',
+                      padding: 4,
+                      color: theme.palette.pumpkin5,
+                    }}
+                    onClick={() => onTimelineClick(index)}
+                  >
+                    {getCurrentTimeline()[index] &&
+                      dayjs(getCurrentTimeline()[index].date.split(' ')[0]).format('MMM DD')}
+                  </Button>
+                </AntTooltip>
+              ) : (
+                <Button
+                  key={offset}
+                  type={index === offsetRange.length - 1 ? 'primary' : 'text'}
+                  style={{
+                    position: 'absolute',
+                    left: offset,
+                    top: 8,
+                    transform: 'translateX(-50%)',
+                    padding: 4,
+                  }}
+                  onClick={() => onTimelineClick(index)}
+                >
+                  {getCurrentTimeline()[index] &&
+                    dayjs(getCurrentTimeline()[index].date.split(' ')[0]).format('MMM DD')}
+                </Button>
+              ),
+            )}
           </Col>
           <Col span={4} style={{ display: 'flex', gap: '8px', paddingLeft: 32 }}>
             <Button

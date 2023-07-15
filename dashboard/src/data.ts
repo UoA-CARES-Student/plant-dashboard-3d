@@ -60,7 +60,7 @@ export default [
         events: [
           {
             date: '2021-10-04',
-            text: 'Changed light level',
+            text: 'Changed light level and this and that this is filler text',
           },
           {
             date: '2021-10-08',

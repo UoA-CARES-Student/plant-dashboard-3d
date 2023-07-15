@@ -2,6 +2,7 @@ import { Col, Row, Typography } from 'antd';
 import { Environment, Event } from '../data';
 import EnvironmentStatisticsCard from './EnvironmentStatisticCard';
 import AlertCard from './AlertCard';
+import EventCard from './EventCard';
 
 interface EnvironmentAreaProps {
   currentEnvironmentData?: Environment;
@@ -10,7 +11,7 @@ interface EnvironmentAreaProps {
 }
 
 function EnvironmentArea(props: EnvironmentAreaProps) {
-  const { currentEnvironmentData, allEnvironmentData, allEvents } = props;
+  const { currentEnvironmentData, allEnvironmentData, allEvents = [] } = props;
   const { Title } = Typography;
 
   const icons = {
@@ -155,8 +156,8 @@ function EnvironmentArea(props: EnvironmentAreaProps) {
             // @ts-ignore
             onWheel={handleScroll}
           >
-            {allEvents?.map((event) => (
-              <div key={event.date}>{event.date}</div>
+            {allEvents.map((event) => (
+              <EventCard key={event.date} {...event} />
             ))}
           </Col>
         </Row>

@@ -84,6 +84,7 @@ function BuildingPage() {
       </Row>
       <GraphArea
         data={currentBuilding.data}
+        events={currentBuilding.events}
         onDateChanged={(newDateRange: { startDate: string; endDate: string }) =>
           setCurrentDateRange(newDateRange)
         }

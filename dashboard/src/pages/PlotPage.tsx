@@ -94,6 +94,7 @@ function PlotPage() {
       </Row>
       <GraphArea
         data={currentPlot.data}
+        events={currentBuilding?.events ?? []}
         onDateChanged={(newDateRange: { startDate: string; endDate: string }) =>
           setCurrentDateRange(newDateRange)
         }
