@@ -8,6 +8,7 @@ import samplePlant from '../assets/sample-plant.jpg';
 import GraphArea from '../components/GraphArea.tsx';
 import { useState } from 'react';
 import EnvironmentArea from '../components/EnvironmentArea.tsx';
+import dayjs from 'dayjs';
 
 function PlantPage() {
   const { plantId } = useParams();
@@ -81,6 +82,11 @@ function PlantPage() {
               currentBuilding.environment.findIndex(
                 (env) => env.date === currentDateRange?.endDate,
               ) + 1,
+            )}
+            allEvents={currentBuilding?.events.filter(
+              (event) =>
+                dayjs(event.date).isAfter(dayjs(currentDateRange?.startDate).subtract(1, 'day')) &&
+                dayjs(event.date).isBefore(dayjs(currentDateRange?.endDate).add(1, 'day')),
             )}
           />
         </Col>
