@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import { chunk, groupBy, isEqual, range } from 'lodash-es';
 import { Data, Event } from '../data';
+import EventCard from './EventCard';
 
 interface GraphAreaProps {
   data: Data[];
@@ -205,7 +206,15 @@ function GraphArea(props: GraphAreaProps) {
           <Col span={16} style={{ height: '100%' }}>
             {offsetRange.map((offset, index) =>
               events.find((event) => event.date === getCurrentTimeline()[index].date) ? (
-                <AntTooltip key={offset} title={'pause lil bro'}>
+                <AntTooltip
+                  key={offset}
+                  title={events
+                    .filter((event) => event.date === getCurrentTimeline()[index].date)
+                    .map((event) => (
+                      <EventCard key={event.date} {...event} />
+                    ))}
+                  color={'white'}
+                >
                   <Button
                     type={index === offsetRange.length - 1 ? 'primary' : 'text'}
                     style={{
