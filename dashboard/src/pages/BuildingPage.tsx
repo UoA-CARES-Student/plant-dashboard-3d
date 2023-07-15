@@ -32,12 +32,15 @@ function BuildingPage() {
     return <CentreErrorCard text='Number is not a valid id' />;
   }
 
-  const [currentDate, setCurrentDate] = useState<string>();
+  const [currentDateRange, setCurrentDateRange] = useState<{
+    startDate: string;
+    endDate: string;
+  }>();
 
   return (
     <>
       <Row style={{ height: 'calc(50vh - 64px)' }}>
-        <Col span={12} style={{ padding: '8px 16px' }}>
+        <Col span={12} style={{ height: '100%', padding: '8px 16px' }}>
           <Row>
             <Col span={24}>
               <Breadcrumb
@@ -54,14 +57,15 @@ function BuildingPage() {
           </Row>
           <EnvironmentArea
             currentEnvironmentData={currentBuilding.environment.find(
-              (env) => env.date === currentDate,
+              (env) => env.date === currentDateRange?.endDate,
             )}
             allEnvironmentData={currentBuilding.environment.slice(
-              Math.max(
-                0,
-                currentBuilding.environment.findIndex((env) => env.date === currentDate) + 1 - 16,
+              currentBuilding.environment.findIndex(
+                (env) => env.date === currentDateRange?.startDate,
               ),
-              currentBuilding.environment.findIndex((env) => env.date === currentDate) + 1,
+              currentBuilding.environment.findIndex(
+                (env) => env.date === currentDateRange?.endDate,
+              ) + 1,
             )}
           />
         </Col>
@@ -74,7 +78,9 @@ function BuildingPage() {
       </Row>
       <GraphArea
         data={currentBuilding.data}
-        onDateChanged={(newDate: string) => setCurrentDate(newDate)}
+        onDateChanged={(newDateRange: { startDate: string; endDate: string }) =>
+          setCurrentDateRange(newDateRange)
+        }
       />
     </>
   );

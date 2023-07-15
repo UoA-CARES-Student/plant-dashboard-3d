@@ -67,11 +67,21 @@ function EnvironmentArea(props: EnvironmentAreaProps) {
   console.log(alerts);
 
   return (
-    <Row style={{ paddingLeft: 16, paddingRight: 16 }}>
+    <Row
+      style={{
+        paddingLeft: 16,
+        paddingRight: 16,
+        paddingBottom: 24,
+        maxHeight: '100%',
+        overflowY: 'auto',
+      }}
+    >
       <Col span={24}>
         <Row>
           <Col>
-            <Title level={4}>Environment</Title>
+            <Title level={4} style={{ marginTop: 20 }}>
+              Environment
+            </Title>
           </Col>
         </Row>
         <Row gutter={[8, 8]}>
@@ -114,7 +124,9 @@ function EnvironmentArea(props: EnvironmentAreaProps) {
         </Row>
         <Row>
           <Col>
-            <Title level={4}>Alerts</Title>
+            <Title level={4} style={{ marginTop: 20 }}>
+              Alerts
+            </Title>
           </Col>
         </Row>
         <Row>
@@ -128,6 +140,26 @@ function EnvironmentArea(props: EnvironmentAreaProps) {
             {alerts.map((alert) => (
               <AlertCard key={alert.date} {...alert} />
             ))}
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Title level={4} style={{ marginTop: 20 }}>
+              Events
+            </Title>
+          </Col>
+        </Row>
+        <Row>
+          <Col
+            span={24}
+            style={{ display: 'flex', gap: 8, overflowX: 'auto' }}
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            onWheel={handleScroll}
+          >
+            {/* {alerts.map((alert) => (
+              <AlertCard key={alert.date} {...alert} />
+            ))} */}
           </Col>
         </Row>
       </Col>

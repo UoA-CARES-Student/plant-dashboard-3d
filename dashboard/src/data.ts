@@ -8,6 +8,11 @@ export interface Data {
   width: number;
 }
 
+export interface Event {
+  date: string;
+  text: string;
+}
+
 export interface Environment {
   date: string;
   temperature: number;
@@ -25,6 +30,7 @@ export type Farm = {
 export type Building = {
   id: number;
   buildingName: string;
+  events: Event[];
   environment: Environment[];
   data: Data[];
   plots: Plot[];
@@ -51,6 +57,16 @@ export default [
       {
         id: 0,
         buildingName: 'Building 1',
+        events: [
+          {
+            date: '2021-10-04',
+            text: 'Changed light level',
+          },
+          {
+            date: '2021-10-08',
+            text: 'Added fertilizer',
+          },
+        ],
         environment: [
           {
             date: '2021-07-01',

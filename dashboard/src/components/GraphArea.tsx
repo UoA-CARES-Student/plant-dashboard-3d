@@ -18,7 +18,7 @@ import { Data } from '../data';
 
 interface GraphAreaProps {
   data: Data[];
-  onDateChanged: (newDate: string) => void;
+  onDateChanged: (newDateRange: { startDate: string; endDate: string }) => void;
 }
 
 function GraphArea(props: GraphAreaProps) {
@@ -169,7 +169,10 @@ function GraphArea(props: GraphAreaProps) {
 
   useEffect(() => {
     setCurrentTimelineSize(getCurrentTimeline().length);
-    onDateChanged(getCurrentTimeline()[getCurrentTimeline().length - 1].date);
+    onDateChanged({
+      startDate: getCurrentTimeline()[0].date,
+      endDate: getCurrentTimeline()[getCurrentTimeline().length - 1].date,
+    });
   }, [currentDataIndex]);
 
   const onTimescaleChange = (timescale: string) => {

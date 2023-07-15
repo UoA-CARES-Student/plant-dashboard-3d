@@ -35,7 +35,10 @@ function PlotPage() {
     return <CentreErrorCard text='Number is not a valid id' />;
   }
 
-  const [currentDate, setCurrentDate] = useState<string>();
+  const [currentDateRange, setCurrentDateRange] = useState<{
+    startDate: string;
+    endDate: string;
+  }>();
 
   return (
     <>
@@ -64,14 +67,15 @@ function PlotPage() {
           </Row>
           <EnvironmentArea
             currentEnvironmentData={currentBuilding?.environment.find(
-              (env) => env.date === currentDate,
+              (env) => env.date === currentDateRange?.endDate,
             )}
             allEnvironmentData={currentBuilding?.environment.slice(
-              Math.max(
-                0,
-                currentBuilding.environment.findIndex((env) => env.date === currentDate) + 1 - 16,
+              currentBuilding.environment.findIndex(
+                (env) => env.date === currentDateRange?.startDate,
               ),
-              currentBuilding.environment.findIndex((env) => env.date === currentDate) + 1,
+              currentBuilding.environment.findIndex(
+                (env) => env.date === currentDateRange?.endDate,
+              ) + 1,
             )}
           />
         </Col>
@@ -84,7 +88,9 @@ function PlotPage() {
       </Row>
       <GraphArea
         data={currentPlot.data}
-        onDateChanged={(newDate: string) => setCurrentDate(newDate)}
+        onDateChanged={(newDateRange: { startDate: string; endDate: string }) =>
+          setCurrentDateRange(newDateRange)
+        }
       />
     </>
   );

@@ -12,7 +12,7 @@ function EnvironmentStatisticsCard(props: EnvironmentStatisticsCardProps) {
   const { icon, text, value } = props;
   return (
     <Card
-      bodyStyle={{ display: 'flex', alignItems: 'center', gap: '8px', height: '100%' }}
+      bodyStyle={{ display: 'flex', alignItems: 'center', gap: '8px', height: '100%', padding: 16 }}
       style={{ height: '100%' }}
     >
       <MaterialSymbol icon={icon} size={24} grade={-25} color={theme.palette.primary6} />
