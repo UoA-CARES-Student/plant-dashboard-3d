@@ -46,7 +46,7 @@ function PlantPage() {
   return (
     <>
       <Row style={{ height: 'calc(50vh - 64px)' }}>
-        <Col span={12} style={{ padding: '8px 16px' }}>
+        <Col span={12} style={{ height: '100%', padding: '8px 16px' }}>
           <Row>
             <Col span={24}>
               <Breadcrumb
