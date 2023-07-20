@@ -43,12 +43,12 @@ function GraphArea(props: GraphAreaProps) {
     );
     return {
       date: weekTotals.date,
-      volume: (weekTotals.volume / weekArr.length).toFixed(2),
-      area: (weekTotals.area / weekArr.length).toFixed(2),
-      fruitlets: (weekTotals.fruitlets / weekArr.length).toFixed(2),
-      leaves: (weekTotals.leaves / weekArr.length).toFixed(2),
-      height: (weekTotals.height / weekArr.length).toFixed(2),
-      width: (weekTotals.width / weekArr.length).toFixed(2),
+      volume: Number((weekTotals.volume / weekArr.length).toFixed(2)),
+      area: Number((weekTotals.area / weekArr.length).toFixed(2)),
+      fruitlets: Number((weekTotals.fruitlets / weekArr.length).toFixed(2)),
+      leaves: Number((weekTotals.leaves / weekArr.length).toFixed(2)),
+      height: Number((weekTotals.height / weekArr.length).toFixed(2)),
+      width: Number((weekTotals.width / weekArr.length).toFixed(2)),
     };
   });
   const monthlyData = Object.values(groupBy(data, (day) => dayjs(day.date).format('MM-YYYY'))).map(
@@ -67,12 +67,12 @@ function GraphArea(props: GraphAreaProps) {
       );
       return {
         date: monthTotals.date,
-        volume: (monthTotals.volume / monthObj.length).toFixed(2),
-        area: (monthTotals.area / monthObj.length).toFixed(2),
-        fruitlets: (monthTotals.fruitlets / monthObj.length).toFixed(2),
-        leaves: (monthTotals.leaves / monthObj.length).toFixed(2),
-        height: (monthTotals.height / monthObj.length).toFixed(2),
-        width: (monthTotals.width / monthObj.length).toFixed(2),
+        volume: Number((monthTotals.volume / monthObj.length).toFixed(2)),
+        area: Number((monthTotals.area / monthObj.length).toFixed(2)),
+        fruitlets: Number((monthTotals.fruitlets / monthObj.length).toFixed(2)),
+        leaves: Number((monthTotals.leaves / monthObj.length).toFixed(2)),
+        height: Number((monthTotals.height / monthObj.length).toFixed(2)),
+        width: Number((monthTotals.width / monthObj.length).toFixed(2)),
       };
     },
   );
@@ -172,8 +172,11 @@ function GraphArea(props: GraphAreaProps) {
   useEffect(() => {
     setCurrentTimelineSize(getCurrentTimeline().length);
     onDateChanged({
-      startDate: getCurrentTimeline()[0].date,
-      endDate: getCurrentTimeline()[getCurrentTimeline().length - 1].date,
+      startDate: getCurrentTimeline()[0]?.date.split(' ')[0],
+      endDate:
+        getCurrentTimeline()[getCurrentTimeline().length - 1]?.date.split(' ')[
+          getCurrentTimeline()[getCurrentTimeline().length - 1]?.date.split(' ').length - 1
+        ],
     });
   }, [currentDataIndex]);
 
@@ -205,11 +208,44 @@ function GraphArea(props: GraphAreaProps) {
           </Col>
           <Col span={16} style={{ height: '100%' }}>
             {offsetRange.map((offset, index) =>
-              events.find((event) => event.date === getCurrentTimeline()[index].date) ? (
+              events.find((event) =>
+                getCurrentTimeline()[index]?.date.split(' ')[0]
+                  ? timescale === 'daily'
+                    ? event.date === getCurrentTimeline()[index].date.split(' ')[0]
+                    : timescale === 'weekly'
+                    ? dayjs(event.date).isAfter(
+                        dayjs(getCurrentTimeline()[index].date.split(' ')[0]).subtract(1, 'day'),
+                      ) &&
+                      dayjs(event.date).isBefore(
+                        dayjs(getCurrentTimeline()[index].date.split(' ')[0]).add(7, 'day'),
+                      )
+                    : dayjs(getCurrentTimeline()[index].date.split(' ')[0]).month() ===
+                        dayjs(event.date).month() &&
+                      dayjs(getCurrentTimeline()[index].date.split(' ')[0]).year() ===
+                        dayjs(event.date).year()
+                  : '',
+              ) ? (
                 <AntTooltip
                   key={offset}
                   title={events
-                    .filter((event) => event.date === getCurrentTimeline()[index].date)
+                    .filter((event) =>
+                      timescale === 'daily'
+                        ? event.date === getCurrentTimeline()[index].date.split(' ')[0]
+                        : timescale === 'weekly'
+                        ? dayjs(event.date).isAfter(
+                            dayjs(getCurrentTimeline()[index].date.split(' ')[0]).subtract(
+                              1,
+                              'day',
+                            ),
+                          ) &&
+                          dayjs(event.date).isBefore(
+                            dayjs(getCurrentTimeline()[index].date.split(' ')[0]).add(7, 'day'),
+                          )
+                        : dayjs(getCurrentTimeline()[index].date.split(' ')[0]).month() ===
+                            dayjs(event.date).month() &&
+                          dayjs(getCurrentTimeline()[index].date.split(' ')[0]).year() ===
+                            dayjs(event.date).year(),
+                    )
                     .map((event) => (
                       <EventCard key={event.date} {...event} />
                     ))}
