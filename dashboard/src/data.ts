@@ -2203,6 +2203,16 @@ export default [
           {
             id: 0,
             plotName: 'Plot A1',
+            plants: [],
+          },
+          {
+            id: 1,
+            plotName: 'Plot A2',
+            plants: [],
+          },
+          {
+            id: 2,
+            plotName: 'Plot A3',
             data: [
               {
                 date: '2023-03-12',
@@ -4615,16 +4625,6 @@ export default [
                 plantName: 'Plant 003',
               },
             ],
-          },
-          {
-            id: 1,
-            plotName: 'Plot A2',
-            plants: [],
-          },
-          {
-            id: 2,
-            plotName: 'Plot A3',
-            plants: [],
           },
           {
             id: 3,

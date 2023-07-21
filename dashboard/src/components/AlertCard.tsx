@@ -1,6 +1,7 @@
 import { Card, Col, Row, Typography } from 'antd';
 import { MaterialSymbol } from 'react-material-symbols';
 import theme from '../theme';
+import dayjs from 'dayjs';
 
 interface AlertCardProps {
   direction: 'up' | 'down';
@@ -31,7 +32,7 @@ function AlertCard(props: AlertCardProps) {
           <MaterialSymbol icon={icon} size={24} grade={-25} color={theme.palette.pumpkin6} />
         </Col>
         <Col>
-          <Typography>{date}</Typography>
+          <Typography>{dayjs(date).format('MMM DD YYYY')}</Typography>
         </Col>
       </Row>
     </Card>

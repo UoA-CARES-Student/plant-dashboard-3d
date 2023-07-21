@@ -66,103 +66,93 @@ function EnvironmentArea(props: EnvironmentAreaProps) {
   };
 
   return (
-    <Row
-      style={{
-        paddingLeft: 16,
-        paddingRight: 16,
-        paddingBottom: 24,
-        maxHeight: '100%',
-        overflowY: 'auto',
-      }}
-    >
-      <Col span={24}>
-        <Row>
-          <Col>
-            <Title level={4} style={{ marginTop: 20 }}>
-              Environment
-            </Title>
-          </Col>
-        </Row>
-        <Row gutter={[8, 8]}>
-          <Col span={12}>
-            <EnvironmentStatisticsCard
-              icon='device_thermostat'
-              text='Tempurature'
-              value={
-                <>
-                  {currentEnvironmentData?.temperature ?? 0} <sup>o</sup>C
-                </>
-              }
-            />
-          </Col>
-          <Col span={12}>
-            <EnvironmentStatisticsCard
-              icon='fluorescent'
-              text='Fluorescents'
-              value={<>{currentEnvironmentData?.fluorescents ?? 0} fc</>}
-            />
-          </Col>
-          <Col span={12}>
-            <EnvironmentStatisticsCard
-              icon='blur_on'
-              text='CO2 Conc.'
-              value={<>{currentEnvironmentData?.co2Concentration ?? 0} ppm</>}
-            />
-          </Col>
-          <Col span={12}>
-            <EnvironmentStatisticsCard
-              icon='humidity_high'
-              text='Irrigation'
-              value={
-                <>
-                  {currentEnvironmentData?.irrigation ?? 0} m<sup>3</sup>/s
-                </>
-              }
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Title level={4} style={{ marginTop: 20 }}>
-              Alerts
-            </Title>
-          </Col>
-        </Row>
-        <Row>
-          <Col
-            span={24}
-            style={{ display: 'flex', gap: 8, overflowX: 'auto' }}
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            onWheel={handleScroll}
-          >
-            {alerts.map((alert) => (
-              <AlertCard key={alert.date} {...alert} />
-            ))}
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Title level={4} style={{ marginTop: 20 }}>
-              Events
-            </Title>
-          </Col>
-        </Row>
-        <Row>
-          <Col
-            span={24}
-            style={{ display: 'flex', gap: 8, overflowX: 'auto' }}
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            onWheel={handleScroll}
-          >
-            {allEvents.map((event) => (
-              <EventCard key={event.date} {...event} />
-            ))}
-          </Col>
-        </Row>
-      </Col>
-    </Row>
+    <>
+      <Row>
+        <Col>
+          <Title level={4} style={{ marginTop: 20 }}>
+            Environment
+          </Title>
+        </Col>
+      </Row>
+      <Row gutter={[8, 8]}>
+        <Col span={12}>
+          <EnvironmentStatisticsCard
+            icon='device_thermostat'
+            text='Tempurature'
+            value={
+              <>
+                {currentEnvironmentData?.temperature ?? 0} <sup>o</sup>C
+              </>
+            }
+          />
+        </Col>
+        <Col span={12}>
+          <EnvironmentStatisticsCard
+            icon='fluorescent'
+            text='Fluorescents'
+            value={<>{currentEnvironmentData?.fluorescents ?? 0} fc</>}
+          />
+        </Col>
+        <Col span={12}>
+          <EnvironmentStatisticsCard
+            icon='blur_on'
+            text='CO2 Conc.'
+            value={<>{currentEnvironmentData?.co2Concentration ?? 0} ppm</>}
+          />
+        </Col>
+        <Col span={12}>
+          <EnvironmentStatisticsCard
+            icon='humidity_high'
+            text='Irrigation'
+            value={
+              <>
+                {currentEnvironmentData?.irrigation ?? 0} m<sup>3</sup>/s
+              </>
+            }
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Title level={4} style={{ marginTop: 20 }}>
+            Alerts
+          </Title>
+        </Col>
+      </Row>
+      <Row>
+        <Col
+          span={24}
+          style={{ display: 'flex', gap: 8, overflowX: 'auto' }}
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          onWheel={handleScroll}
+        >
+          {alerts.map((alert) => (
+            <AlertCard key={alert.date} {...alert} />
+          ))}
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Title level={4} style={{ marginTop: 20 }}>
+            Events
+          </Title>
+        </Col>
+      </Row>
+      <Row>
+        <Col
+          span={24}
+          style={{ display: 'flex', gap: 8, overflowX: 'auto' }}
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          onWheel={handleScroll}
+        >
+          {allEvents.map((event) => (
+            <EventCard key={event.date} {...event} />
+          ))}
+        </Col>
+      </Row>
+    </>
   );
 }
 

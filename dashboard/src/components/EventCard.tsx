@@ -1,5 +1,6 @@
 import { Card, Col, Row, Typography } from 'antd';
 import { MaterialSymbol } from 'react-material-symbols';
+import dayjs from 'dayjs';
 import theme from '../theme';
 
 interface EventCardProps {
@@ -21,7 +22,7 @@ function EventCard(props: EventCardProps) {
           />
         </Col>
         <Col>
-          <Typography>{date}</Typography>
+          <Typography>{dayjs(date).format('MMM DD YYYY')}</Typography>
         </Col>
       </Row>
       <Row gutter={12}>

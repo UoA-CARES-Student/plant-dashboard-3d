@@ -14,7 +14,7 @@ export default function PlotAOneClickableSvg(props: PlotAOneClickableSvgProps) {
   const [hoveredPlant, setHoveredPlant] = useState<Plant | undefined>();
   const [mouseXY, setMouseXY] = useState<[number, number] | null>(null);
 
-  const plot = farms[0].buildings[0].plots[0];
+  const plot = farms[0].buildings[0].plots[2];
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'

@@ -7,7 +7,7 @@ import ZoomableComponent from '../components/ZoomableComponent';
 import farms, { Building } from '../data.ts';
 import CentreErrorCard from '../components/CentreErrorCard.tsx';
 import GraphArea from '../components/GraphArea.tsx';
-import { Breadcrumb } from 'antd';
+import { Breadcrumb, Typography } from 'antd';
 import EnvironmentArea from '../components/EnvironmentArea.tsx';
 import { useState } from 'react';
 import dayjs from 'dayjs';
@@ -56,24 +56,44 @@ function BuildingPage() {
               />
             </Col>
           </Row>
-          <EnvironmentArea
-            currentEnvironmentData={currentBuilding.environment.find(
-              (env) => env.date === currentDateRange?.endDate,
-            )}
-            allEnvironmentData={currentBuilding.environment.slice(
-              currentBuilding.environment.findIndex(
-                (env) => env.date === currentDateRange?.startDate,
-              ),
-              currentBuilding.environment.findIndex(
-                (env) => env.date === currentDateRange?.endDate,
-              ) + 1,
-            )}
-            allEvents={currentBuilding.events.filter(
-              (event) =>
-                dayjs(event.date).isAfter(dayjs(currentDateRange?.startDate).subtract(1, 'day')) &&
-                dayjs(event.date).isBefore(dayjs(currentDateRange?.endDate).add(1, 'day')),
-            )}
-          />
+          <Row
+            style={{
+              padding: '8px 16px',
+              maxHeight: 'calc(100% - 22px)',
+              overflowY: 'auto',
+              marginTop: 8,
+            }}
+          >
+            <Col span={24}>
+              <Row>
+                <Col span={24} style={{ display: 'flex', gap: 8 }}>
+                  <Typography style={{ fontSize: 20 }}>Estimated Harvest Date:{'  '}</Typography>
+                  <Typography style={{ fontSize: 20, color: theme.palette.primary6 }}>
+                    {dayjs('2023-08-04').format('MMM DD YYYY')}
+                  </Typography>
+                </Col>
+              </Row>
+              <EnvironmentArea
+                currentEnvironmentData={currentBuilding.environment.find(
+                  (env) => env.date === currentDateRange?.endDate,
+                )}
+                allEnvironmentData={currentBuilding.environment.slice(
+                  currentBuilding.environment.findIndex(
+                    (env) => env.date === currentDateRange?.startDate,
+                  ),
+                  currentBuilding.environment.findIndex(
+                    (env) => env.date === currentDateRange?.endDate,
+                  ) + 1,
+                )}
+                allEvents={currentBuilding.events.filter(
+                  (event) =>
+                    dayjs(event.date).isAfter(
+                      dayjs(currentDateRange?.startDate).subtract(1, 'day'),
+                    ) && dayjs(event.date).isBefore(dayjs(currentDateRange?.endDate).add(1, 'day')),
+                )}
+              />
+            </Col>
+          </Row>
         </Col>
 
         <Col span={12} style={{ height: '100%', background: theme.palette.bole1 }}>
