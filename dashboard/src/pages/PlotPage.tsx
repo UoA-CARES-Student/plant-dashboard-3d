@@ -115,6 +115,7 @@ function PlotPage() {
       <GraphArea
         data={currentPlot.data}
         events={currentBuilding?.events ?? []}
+        isAverage={true}
         onDateChanged={(newDateRange: { startDate: string; endDate: string }) =>
           setCurrentDateRange(newDateRange)
         }

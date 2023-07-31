@@ -20,11 +20,12 @@ import EventCard from './EventCard';
 interface GraphAreaProps {
   data: Data[];
   events: Event[];
+  isAverage: boolean;
   onDateChanged: (newDateRange: { startDate: string; endDate: string }) => void;
 }
 
 function GraphArea(props: GraphAreaProps) {
-  const { data, events, onDateChanged } = props;
+  const { data, events, isAverage, onDateChanged } = props;
   const { Title, Text } = Typography;
 
   const dailyData = data;
@@ -319,7 +320,8 @@ function GraphArea(props: GraphAreaProps) {
                   }}
                 >
                   <Title level={4} style={{ margin: 0 }}>
-                    Avg. {metric.charAt(0).toUpperCase() + metric.slice(1)}
+                    {isAverage && 'Avg. '}
+                    {metric.charAt(0).toUpperCase() + metric.slice(1)}
                   </Title>
                   <Button
                     icon={<MaterialSymbol icon='fullscreen' size={32} grade={-25} />}

@@ -120,6 +120,7 @@ function PlantPage() {
       <GraphArea
         data={currentPlant.data}
         events={currentBuilding?.events ?? []}
+        isAverage={false}
         onDateChanged={(newDateRange: { startDate: string; endDate: string }) =>
           setCurrentDateRange(newDateRange)
         }
