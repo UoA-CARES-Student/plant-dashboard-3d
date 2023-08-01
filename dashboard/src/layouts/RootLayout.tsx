@@ -9,6 +9,9 @@ function RootLayout() {
   const [id, setId] = useState('');
 
   useEffect(() => {
+    if (localStorage.getItem('id')) {
+      return;
+    }
     setIsModalOpen(true);
   }, []);
 
@@ -17,6 +20,7 @@ function RootLayout() {
       setStatus('error');
       return;
     }
+    localStorage.setItem('id', id);
     setStatus('');
     setId('');
     setIsModalOpen(false);
