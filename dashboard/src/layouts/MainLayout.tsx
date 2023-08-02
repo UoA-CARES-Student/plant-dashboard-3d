@@ -17,6 +17,7 @@ function MainLayout() {
     children: farm.buildings.map((building) => ({
       label: building.buildingName,
       key: building.id,
+      disabled: !building?.data,
     })),
   }));
 
