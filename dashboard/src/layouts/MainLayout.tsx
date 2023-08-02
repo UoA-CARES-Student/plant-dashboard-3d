@@ -5,8 +5,10 @@ import Menu, { MenuProps } from 'antd/es/menu/menu';
 import profileImage from '../assets/profile.svg';
 import farms from '../data.ts';
 import { ItemType } from 'antd/es/menu/hooks/useItems';
+import { Modal, Typography } from 'antd';
 
 function MainLayout() {
+  const { Text } = Typography;
   const navigate = useNavigate();
 
   const buildings: ItemType[] = farms.map((farm) => ({
@@ -36,6 +38,17 @@ function MainLayout() {
     } else {
       navigate(`/building/${e.key}`);
     }
+  };
+
+  const showIdModal = () => {
+    Modal.info({
+      title: 'Your Survey Id',
+      content: (
+        <div>
+          <Text>Your id is &lsquo;{localStorage.getItem('id')}&rsquo;</Text>
+        </div>
+      ),
+    });
   };
 
   return (
@@ -72,7 +85,7 @@ function MainLayout() {
           src={profileImage}
           alt='logo'
           style={{ cursor: 'pointer' }}
-          onClick={() => navigate('/')}
+          onClick={() => showIdModal()}
         />
       </Header>
       <Content>
