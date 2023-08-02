@@ -11,6 +11,7 @@ import PlantPage from './pages/PlantPage';
 import { ConfigProvider } from 'antd';
 import '@fontsource/plus-jakarta-sans';
 import 'react-material-symbols/dist/outlined.css';
+import { randomiseData } from './mock-data-generation/dataRandomiser';
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,8 @@ const router = createBrowserRouter([
     ],
   },
 ]);
+
+randomiseData();
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>

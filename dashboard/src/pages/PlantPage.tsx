@@ -34,7 +34,7 @@ function PlantPage() {
     }
   }
 
-  if (!currentPlant || parseInt(plantId) !== 0) {
+  if (!currentPlant || !currentPlant.data) {
     return <CentreErrorCard text='Number is not a valid id' />;
   }
 
