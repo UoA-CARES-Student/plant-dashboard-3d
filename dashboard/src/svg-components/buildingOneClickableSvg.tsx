@@ -1792,7 +1792,7 @@ export default function BuildingOneClickableSvg(props: BuildingOneClickableSvgPr
           opacity='0.4'
         ></path>
       </g>
-      <g
+      {/* <g
         fillOpacity='1'
         strokeLinecap='round'
         strokeLinejoin='round'
@@ -1922,7 +1922,7 @@ export default function BuildingOneClickableSvg(props: BuildingOneClickableSvgPr
             A2
           </tspan>
         </text>
-      </g>
+      </g> */}
       <g
         fillOpacity='1'
         strokeLinecap='round'
@@ -1988,7 +1988,7 @@ export default function BuildingOneClickableSvg(props: BuildingOneClickableSvgPr
           </tspan>
         </text>
       </g>
-      <g
+      {/* <g
         fillOpacity='1'
         strokeLinecap='round'
         strokeLinejoin='round'
@@ -2377,7 +2377,7 @@ export default function BuildingOneClickableSvg(props: BuildingOneClickableSvgPr
             C3
           </tspan>
         </text>
-      </g>
+      </g> */}
     </svg>
   );
 }

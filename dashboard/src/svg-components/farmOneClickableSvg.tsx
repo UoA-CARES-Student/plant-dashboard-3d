@@ -529,7 +529,7 @@ export default function FarmOneClickableSvg(props: FarmOneClickableSvgProps) {
           </tspan>
         </text>
       </g>
-      <g
+      {/* <g
         fillOpacity='1'
         strokeDasharray='none'
         strokeLinecap='round'
@@ -684,7 +684,7 @@ export default function FarmOneClickableSvg(props: FarmOneClickableSvgProps) {
             Building 4
           </tspan>
         </text>
-      </g>
+      </g> */}
     </svg>
   );
 }

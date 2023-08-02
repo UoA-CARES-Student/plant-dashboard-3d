@@ -1754,7 +1754,7 @@ export default function FarmTwoClickableSvg(props: FarmTwoClickableSvgProps) {
           opacity='0.4'
         ></path>
       </g>
-      <g
+      {/* <g
         fillOpacity='1'
         strokeLinecap='round'
         strokeLinejoin='round'
@@ -1805,7 +1805,7 @@ export default function FarmTwoClickableSvg(props: FarmTwoClickableSvgProps) {
             Main Greenhouse
           </tspan>
         </text>
-      </g>
+      </g> */}
     </svg>
   );
 }
