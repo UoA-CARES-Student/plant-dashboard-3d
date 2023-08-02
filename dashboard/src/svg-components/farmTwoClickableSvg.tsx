@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import farms from '../data';
+// import { useState } from 'react';
 
 interface FarmTwoClickableSvgProps {
   onBuildingClick: (id: number) => void;
@@ -8,9 +7,9 @@ interface FarmTwoClickableSvgProps {
 }
 
 export default function FarmTwoClickableSvg(props: FarmTwoClickableSvgProps) {
-  const { onBuildingClick, height, width } = props;
+  const { height, width } = props;
 
-  const [hovered, setHovered] = useState(false);
+  // const [hovered, setHovered] = useState(false);
 
   return (
     <svg
