@@ -43,6 +43,13 @@ function RootLayout() {
         ]}
       >
         <Space direction='vertical' size='middle' style={{ padding: 16, width: '80%' }}>
+          <Text>
+            As part of this survey we will record key click events within our website. This will
+            help give us an idea of how you interacted with our website. To do this we need you to
+            generate a uuid and enter it here and also on your survey form so that we can
+            anonymously link your results. At any time you can click on the profile button in the
+            top right hand corner to view your id.
+          </Text>
           <Space size='small'>
             <Text>Get your uuid from</Text>
             <Link href='https://www.uuidgenerator.net/guid' target='_blank'>
@@ -55,6 +62,7 @@ function RootLayout() {
             value={id}
             onChange={(e) => setId(e.target.value)}
             onPressEnter={handleConfirm}
+            style={{ marginTop: 16 }}
           />
         </Space>
       </Modal>
