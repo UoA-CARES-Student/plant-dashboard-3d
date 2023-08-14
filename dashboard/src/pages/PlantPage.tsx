@@ -112,9 +112,24 @@ function PlantPage() {
         </Col>
 
         <Col span={12} style={{ height: '100%', background: theme.palette.bole1 }}>
-          <ZoomableComponent>
-            <img src={samplePlant} alt='plant' style={{ width: '100%' }} />
-          </ZoomableComponent>
+          {/* {
+            // eslint-disable-next-line no-constant-condition
+            false ? (
+              <ZoomableComponent>
+                <img src={samplePlant} alt='plant' style={{ width: '100%' }} />
+              </ZoomableComponent>
+            ) : (
+''
+            )
+          } */}
+          <model-viewer
+            alt='Plant'
+            src='/Avocado.glb'
+            ar
+            shadow-intensity='1'
+            camera-controls
+            touch-action='pan-y'
+          ></model-viewer>
         </Col>
       </Row>
       <GraphArea
