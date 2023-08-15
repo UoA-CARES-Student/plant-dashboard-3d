@@ -112,36 +112,33 @@ function PlantPage() {
         </Col>
 
         <Col span={12} style={{ height: '100%', background: theme.palette.bole1 }}>
-          {
-            // eslint-disable-next-line no-constant-condition
-            currentPlant.id === 0 ? (
-              <ZoomableComponent>
-                <img src={samplePlant} alt='plant' style={{ width: '100%' }} />
-              </ZoomableComponent>
-            ) : currentPlant.id === 1 ? (
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
-              <model-viewer
-                alt='Plant'
-                src='/tomato_plant.glb'
-                shadow-intensity='1'
-                camera-controls
-                touch-action='pan-y'
-                style={{ width: '100%', height: '100%' }}
-              />
-            ) : (
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
-              <model-viewer
-                alt='Plant'
-                src='/tomato_plant.glb'
-                shadow-intensity='1'
-                camera-controls
-                touch-action='pan-y'
-                style={{ width: '100%', height: '100%' }}
-              />
-            )
-          }
+          {currentPlant.id === 0 ? (
+            <ZoomableComponent>
+              <img src={samplePlant} alt='plant' style={{ width: '100%' }} />
+            </ZoomableComponent>
+          ) : currentPlant.id === 1 ? (
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            <model-viewer
+              alt='Plant'
+              src='/tomato_plant.glb'
+              shadow-intensity='1'
+              camera-controls
+              touch-action='pan-y'
+              style={{ width: '100%', height: '100%' }}
+            />
+          ) : (
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            <model-viewer
+              alt='Plant'
+              src='/tomato_plant.glb'
+              shadow-intensity='1'
+              camera-controls
+              touch-action='pan-y'
+              style={{ width: '100%', height: '100%' }}
+            />
+          )}
         </Col>
       </Row>
       <GraphArea
