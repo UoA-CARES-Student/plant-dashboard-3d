@@ -1,4 +1,5 @@
 import { Button, Input, Modal, Space, Typography } from 'antd';
+import mixpanel from 'mixpanel-browser';
 import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
@@ -24,6 +25,17 @@ function RootLayout() {
     setStatus('');
     setId('');
     setIsModalOpen(false);
+
+    mixpanel.init('08a1dee1408d2a5942e2d93dabc6daac', {
+      debug: true,
+      persistence: 'localStorage',
+    });
+
+    console.log(id);
+
+    mixpanel.identify(id);
+
+    mixpanel.track_pageview();
   };
 
   return (

@@ -6,9 +6,10 @@ import ZoomableComponent from '../components/ZoomableComponent.tsx';
 import theme from '../theme.ts';
 import samplePlant from '../assets/sample-plant.jpg';
 import GraphArea from '../components/GraphArea.tsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import EnvironmentArea from '../components/EnvironmentArea.tsx';
 import dayjs from 'dayjs';
+import mixpanel from 'mixpanel-browser';
 
 function PlantPage() {
   const { plantId } = useParams();
@@ -37,6 +38,14 @@ function PlantPage() {
   if (!currentPlant || !currentPlant.data) {
     return <CentreErrorCard text='Number is not a valid id' />;
   }
+
+  useEffect(() => {
+    try {
+      mixpanel.track_pageview();
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
 
   const [currentDateRange, setCurrentDateRange] = useState<{
     startDate: string;
@@ -121,7 +130,7 @@ function PlantPage() {
             // @ts-ignore
             <model-viewer
               alt='Plant'
-              src='/tomato_plant.glb'
+              src='/pretty_good_filtered_output.glb'
               shadow-intensity='1'
               camera-controls
               touch-action='pan-y'

@@ -7,9 +7,10 @@ import CentreErrorCard from '../components/CentreErrorCard';
 import farms, { Building, Plot } from '../data';
 import GraphArea from '../components/GraphArea';
 import { Breadcrumb, Typography } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import EnvironmentArea from '../components/EnvironmentArea';
 import dayjs from 'dayjs';
+import mixpanel from 'mixpanel-browser';
 
 function PlotPage() {
   const navigate = useNavigate();
@@ -35,6 +36,14 @@ function PlotPage() {
   if (!currentPlot || parseInt(plotId) !== 2) {
     return <CentreErrorCard text='Number is not a valid id' />;
   }
+
+  useEffect(() => {
+    try {
+      mixpanel.track_pageview();
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
 
   const [currentDateRange, setCurrentDateRange] = useState<{
     startDate: string;

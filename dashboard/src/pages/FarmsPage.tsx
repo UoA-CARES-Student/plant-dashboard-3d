@@ -3,11 +3,21 @@ import Row from 'antd/es/row';
 import { useNavigate } from 'react-router-dom';
 import FarmOneClickableSvg from '../svg-components/farmOneClickableSvg';
 import FarmTwoClickableSvg from '../svg-components/farmTwoClickableSvg';
+import mixpanel from 'mixpanel-browser';
+import { useEffect } from 'react';
 
 function FarmsPage() {
   const navigate = useNavigate();
 
   const onBuildingClick = (id: number) => navigate(`/building/${id}`);
+
+  useEffect(() => {
+    try {
+      mixpanel.track_pageview();
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
 
   return (
     <Row justify={'center'} style={{ height: '100%', gap: '0.6%' }}>

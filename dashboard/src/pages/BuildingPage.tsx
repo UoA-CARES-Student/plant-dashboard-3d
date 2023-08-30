@@ -9,8 +9,9 @@ import CentreErrorCard from '../components/CentreErrorCard.tsx';
 import GraphArea from '../components/GraphArea.tsx';
 import { Breadcrumb, Typography } from 'antd';
 import EnvironmentArea from '../components/EnvironmentArea.tsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
+import mixpanel from 'mixpanel-browser';
 
 function BuildingPage() {
   const navigate = useNavigate();
@@ -32,6 +33,14 @@ function BuildingPage() {
   if (!currentBuilding || parseInt(buildingId) !== 0) {
     return <CentreErrorCard text='Number is not a valid id' />;
   }
+
+  useEffect(() => {
+    try {
+      mixpanel.track_pageview();
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
 
   const [currentDateRange, setCurrentDateRange] = useState<{
     startDate: string;
