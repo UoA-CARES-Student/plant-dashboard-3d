@@ -40,26 +40,7 @@ function PlantPage() {
     return <CentreErrorCard text='Number is not a valid id' />;
   }
 
-  const plantDragEventSend = (e: { target: { id: string }; detail: { source: string } }) => {
-    if (e.detail.source === 'user-interaction') {
-      // @ts-ignore
-      document
-        .getElementById(e.target.id)
-        ?.removeEventListener('camera-change', plantDragEventSend);
-
-      mixpanel.track('Plant Drag', {
-        'Plant Number': e.target.id,
-      });
-    }
-  };
-
   useEffect(() => {
-    // @ts-ignore
-    document.getElementById('plant-1')?.addEventListener('camera-change', plantDragEventSend);
-    // @ts-ignore
-    document.getElementById('plant-2')?.addEventListener('camera-change', plantDragEventSend);
-    // @ts-ignore
-    document.getElementById('plant-3')?.addEventListener('camera-change', plantDragEventSend);
     try {
       mixpanel.track_pageview();
     } catch (e) {
@@ -146,27 +127,49 @@ function PlantPage() {
               <img src={samplePlant} alt='plant' style={{ width: '100%' }} />
             </ZoomableComponent>
           ) : currentPlant.id === 1 ? (
-            // @ts-ignore
-            <model-viewer
-              id='plant-2'
-              alt='Plant'
-              src='/pretty_good_filtered_output.glb'
-              shadow-intensity='1'
-              camera-controls
-              touch-action='pan-y'
+            <div
               style={{ width: '100%', height: '100%' }}
-            />
+              onClick={() =>
+                mixpanel.track('Plant Drag', {
+                  'Plant Number': 'plant-2',
+                })
+              }
+            >
+              {
+                // @ts-ignore
+                <model-viewer
+                  id='plant-2'
+                  alt='Plant'
+                  src='/pretty_good_filtered_output.glb'
+                  shadow-intensity='1'
+                  camera-controls
+                  touch-action='pan-y'
+                  style={{ width: '100%', height: '100%' }}
+                />
+              }
+            </div>
           ) : (
-            // @ts-ignore
-            <model-viewer
-              id='plant-3'
-              alt='Plant'
-              src='/tomato_plant.glb'
-              shadow-intensity='1'
-              camera-controls
-              touch-action='pan-y'
+            <div
               style={{ width: '100%', height: '100%' }}
-            />
+              onClick={() =>
+                mixpanel.track('Plant Drag', {
+                  'Plant Number': 'plant-3',
+                })
+              }
+            >
+              {
+                // @ts-ignore
+                <model-viewer
+                  id='plant-3'
+                  alt='Plant'
+                  src='/tomato_plant.glb'
+                  shadow-intensity='1'
+                  camera-controls
+                  touch-action='pan-y'
+                  style={{ width: '100%', height: '100%' }}
+                />
+              }
+            </div>
           )}
         </Col>
       </Row>
