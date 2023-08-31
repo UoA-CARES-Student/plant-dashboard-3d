@@ -16,6 +16,7 @@ import dayjs from 'dayjs';
 import { chunk, groupBy, isEqual, range } from 'lodash-es';
 import { Data, Event } from '../data';
 import EventCard from './EventCard';
+import mixpanel from 'mixpanel-browser';
 
 interface GraphAreaProps {
   data: Data[];
@@ -136,6 +137,9 @@ function GraphArea(props: GraphAreaProps) {
   };
 
   const onTimelineLeft = () => {
+    mixpanel.track('Timeline Move', {
+      Method: 'Left Arrow',
+    });
     if (currentDataIndex <= 1) {
       return;
     }
@@ -143,6 +147,9 @@ function GraphArea(props: GraphAreaProps) {
   };
 
   const onTimelineFirstPage = () => {
+    mixpanel.track('Timeline Move', {
+      Method: 'First Page',
+    });
     if (currentDataIndex < maximumTimelineSize) {
       return;
     }
@@ -150,6 +157,9 @@ function GraphArea(props: GraphAreaProps) {
   };
 
   const onTimelineRight = () => {
+    mixpanel.track('Timeline Move', {
+      Method: 'Right Arrow',
+    });
     if (currentDataIndex >= getCurrentDataLength() - 1) {
       return;
     }
@@ -157,6 +167,9 @@ function GraphArea(props: GraphAreaProps) {
   };
 
   const onTimelineLastPage = () => {
+    mixpanel.track('Timeline Move', {
+      Method: 'Last Page',
+    });
     if (currentDataIndex >= getCurrentDataLength() - 1) {
       return;
     }
@@ -164,6 +177,9 @@ function GraphArea(props: GraphAreaProps) {
   };
 
   const onTimelineClick = (index: number) => {
+    mixpanel.track('Timeline Move', {
+      Method: 'Number Click',
+    });
     if (currentDataIndex - (currentTimelineSize - 1 - index) === 0) {
       return;
     }

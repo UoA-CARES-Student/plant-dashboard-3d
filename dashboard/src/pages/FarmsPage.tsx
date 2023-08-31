@@ -15,7 +15,7 @@ function FarmsPage() {
     try {
       mixpanel.track_pageview();
     } catch (e) {
-      console.log(e);
+      console.warn(e);
     }
   }, []);
 

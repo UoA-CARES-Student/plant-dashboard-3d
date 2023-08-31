@@ -11,7 +11,6 @@ import PlantPage from './pages/PlantPage';
 import { ConfigProvider } from 'antd';
 import '@fontsource/plus-jakarta-sans';
 import 'react-material-symbols/dist/outlined.css';
-import { randomiseData } from './mock-data-generation/dataRandomiser';
 
 const router = createBrowserRouter([
   {
@@ -44,24 +43,20 @@ const router = createBrowserRouter([
   },
 ]);
 
-randomiseData();
-
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <ConfigProvider
-      theme={{
-        token: {
-          colorPrimary: '#6B9080',
-          colorTextBase: '#040303',
-          fontFamily:
-            // eslint-disable-next-line quotes
-            "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+  <ConfigProvider
+    theme={{
+      token: {
+        colorPrimary: '#6B9080',
+        colorTextBase: '#040303',
+        fontFamily:
+          // eslint-disable-next-line quotes
+          "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
 
-          colorBgLayout: '#fff',
-        },
-      }}
-    >
-      <RouterProvider router={router} />
-    </ConfigProvider>
-  </React.StrictMode>,
+        colorBgLayout: '#fff',
+      },
+    }}
+  >
+    <RouterProvider router={router} />
+  </ConfigProvider>,
 );
