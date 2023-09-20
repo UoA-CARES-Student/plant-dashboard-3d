@@ -3,9 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import CentreErrorCard from '../components/CentreErrorCard';
 import farms, { Building, Plant, Plot } from '../data.ts';
 import { Breadcrumb, Col, Row, Typography } from 'antd';
-import ZoomableComponent from '../components/ZoomableComponent.tsx';
 import theme from '../theme.ts';
-import samplePlant from '../assets/sample-plant.jpg';
 import GraphArea from '../components/GraphArea.tsx';
 import { useEffect, useState } from 'react';
 import EnvironmentArea from '../components/EnvironmentArea.tsx';
@@ -123,9 +121,27 @@ function PlantPage() {
 
         <Col span={12} style={{ height: '100%', background: theme.palette.bole1 }}>
           {currentPlant.id === 0 ? (
-            <ZoomableComponent>
-              <img src={samplePlant} alt='plant' style={{ width: '100%' }} />
-            </ZoomableComponent>
+            <div
+              style={{ width: '100%', height: '100%' }}
+              onClick={() =>
+                mixpanel.track('Plant Drag', {
+                  'Plant Number': 'plant-1',
+                })
+              }
+            >
+              {
+                // @ts-ignore
+                <model-viewer
+                  id='plant-1'
+                  alt='Plant'
+                  src='/tomato_plant_1.glb'
+                  shadow-intensity='1'
+                  camera-controls
+                  touch-action='pan-y'
+                  style={{ width: '100%', height: '100%' }}
+                />
+              }
+            </div>
           ) : currentPlant.id === 1 ? (
             <div
               style={{ width: '100%', height: '100%' }}
@@ -140,7 +156,7 @@ function PlantPage() {
                 <model-viewer
                   id='plant-2'
                   alt='Plant'
-                  src='/pretty_good_filtered_output.glb'
+                  src='/tomato_plant_2.glb'
                   shadow-intensity='1'
                   camera-controls
                   touch-action='pan-y'
@@ -162,7 +178,7 @@ function PlantPage() {
                 <model-viewer
                   id='plant-3'
                   alt='Plant'
-                  src='/tomato_plant.glb'
+                  src='/tomato_plant_3.glb'
                   shadow-intensity='1'
                   camera-controls
                   touch-action='pan-y'

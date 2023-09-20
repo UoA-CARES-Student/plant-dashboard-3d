@@ -2,7 +2,8 @@ import orginalData from './orginalData';
 
 export const randomiseData = () => {
   const test = orginalData.map((data) => {
-    let fruitlets = data.fruitlets - 3 + Math.floor(Math.random() * 5);
+    const test = data.fruitlets > 15 ? 15 : data.fruitlets;
+    let fruitlets = test - 3 + Math.floor(Math.random() * 5);
     if (fruitlets < 0) {
       fruitlets = 0;
     }
