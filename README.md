@@ -1,60 +1,47 @@
-# example-project
+# Plant Visualizer
 
 ## Introduction
 
-This project is an example project to demonstrate how to document the information for your project in this README. Every repository in the UoA-CARES-Student group should have README to provide the minimum knowledge of your project to collaborators. This README is just an example, and your one may have different styles of this. Please keep in mind that README is for collaborators who haven't had any background on your project. That is, you shouldn't assume that they have a similar system environment to yours.
+This project is one part of part four project #62 from 2023 Done by Eva Sorensen and Max Nankivell. This reporsitory contains the code for the visualization software created and the other repository named "creating-a-mesh-from-plant-images" contains the code for building a 3D model. This visualization software is a React dashboard application designed for farmers and researchers to be able to view and manage information to do with their plants.
 
 ## Prerequisites
 
-Please specify all the dependencies for your project. For example,
-
-- OS ubuntu 16.04
-- Python x.x
-- OpenCV x.x
-- Realsense camera D435 \* 2
+- OS any should work but the project was build on windows
+- Nodejs 18.16.0
 
 ## Installation guide
 
-Please provide a very detailed installation guide here. Your project may require multiple steps to install a couple of libraries. Please spend enough time on this section for easy and accurate description. If you use a package-management system, it could be simple. For example, if pip is used, this command will install proper python libraries in your system.
+Just CD into the dashboard directory and run
 
-```bash
-pip install -r requirements.txt
 ```
+> npm install
+```
+
+There are instructions on others commands you can run in the README file within the directory.
 
 ## How to run
 
-Please add descriptions or commands to run your project. If you need multiple steps to run your program, please specify all.
+To run the project just run the following command in the dashboard directory
 
-```bash
-python main.py
+```
+> npm run dev
 ```
 
-## Directory hierarchy & Code structure
+## Code structure
 
-Please provide a directory hierarchy for your project. If you use Ubuntu, you can use this command to get it(tree hello-students). Also, you can use this command(git ls-tree -r --name-only HEAD | tree --fromfile) to get the structure under git control.
+This project is structured pretty conventionally for a React project built with Vite. If you are coming to this project with little to no knowledge of this project or web development. Key technologies used which you must research to understand the code are:
 
-<pre>
-hello-students
-├── LICENSE
-├── README.md
-└── resource
-    └── drew-beamer-3SIXZisims4-unsplash.jpg
-</pre>
+- NPM
+- TypeScript
+- React
+- Vite
+- eslint
+- prettier
+- Ant design
+- SASS
 
-And describe what each file does.
-
-- LICENSE: license for this project
-- README.md: Project information
-- ...
-
-## Known issues & workaround
-
-If you have any critical issues for your project, please specify them in this section.
+There is also a Mixpanel project used for collecting interaction data from users and a Qualtrics project for doing user evaluation surveys, both of which Ho Seok Ahn and Trevor Gee should have access to so if these are necessary tools for you they should be contacted.
 
 ## References
 
-If you have reference projects or links, please list them all in this section.
-
-- [ubuntu](https://ubuntu.com/)
-- [pip](https://pypi.org/project/pip/)
-- [tree](http://manpages.ubuntu.com/manpages/trusty/man1/tree.1.html)
+- [Our 3D Model Project](https://github.com/UoA-CARES-Student/creating-a-mesh-from-plant-images)
